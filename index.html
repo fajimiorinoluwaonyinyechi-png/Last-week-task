@@ -3,533 +3,740 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Velo Vault - Premium Modern Fintech Dashboard for real-time balance tracking, pending & incoming transactions, and instant money management.">
-  <title>Velo Vault | Modern Fintech Dashboard</title>
-  <!-- Google Fonts: Plus Jakarta Sans -->
+  <meta name="description" content="FinSight - Advanced Modern Fintech Dashboard & Card Payment Platform">
+  <title>FinSight | Financial Insights & Dashboard</title>
+  <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <div id="app" class="dashboard-wrapper">
-    <!-- Top Navigation Bar -->
-    <header class="top-nav">
+  <div class="finsight-app">
+    
+    <!-- LEFT SIDEBAR -->
+    <aside class="sidebar" id="sidebar">
+      <!-- Brand Logo -->
       <div class="brand">
-        <div class="logo-icon">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M13 2L3 14H12L11 22L21 10H12L13 2Z" fill="url(#brand-grad)" stroke="#818cf8" stroke-width="1.5" stroke-linejoin="round"/>
-            <defs>
-              <linearGradient id="brand-grad" x1="3" y1="2" x2="21" y2="22" gradientUnits="userSpaceOnUse">
-                <stop stop-color="#6366f1"/>
-                <stop offset="1" stop-color="#a855f7"/>
-              </linearGradient>
-            </defs>
+        <div class="logo-icon-wrap">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 2L3 9V20C3 20.5523 3.44772 21 4 21H20C20.5523 21 21 20.5523 21 20V9L12 2Z" fill="#34C759" opacity="0.2"/>
+            <path d="M12 4.5L18.5 9.5V18.5H14.5V13.5H9.5V18.5H5.5V9.5L12 4.5Z" fill="#22C55E"/>
+            <circle cx="12" cy="9" r="2.5" fill="#DCFCE7"/>
           </svg>
         </div>
-        <span class="brand-name">Velo<span class="brand-highlight">Vault</span></span>
+        <span class="brand-title">FinSight</span>
       </div>
 
-      <div class="search-bar-container">
-        <svg class="search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <circle cx="11" cy="11" r="8"></circle>
-          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-        </svg>
-        <input type="text" id="globalSearchInput" placeholder="Search transactions, recipients, categories..." autocomplete="off">
-      </div>
-
-      <div class="user-controls">
-        <button class="nav-action-btn" id="notificationsBtn" title="Notifications" aria-label="Notifications">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#e2e8f0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
-            <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+      <!-- Navigation Menu -->
+      <nav class="nav-menu">
+        <a href="#dashboard" class="nav-link active" data-page="dashboard">
+          <svg class="nav-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+            <polyline points="9 22 9 12 15 12 15 22"/>
           </svg>
-          <span class="notification-badge" id="unreadBadge">3</span>
-        </button>
+          <span class="nav-text">Dashboard</span>
+        </a>
 
-        <div class="user-profile">
-          <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=120&q=80" alt="Alex Morgan Avatar" class="avatar-img">
-          <div class="user-info">
-            <span class="user-name">Alex Morgan</span>
-            <span class="user-tier">PRO MEMBER</span>
+        <div class="nav-group">
+          <a href="#payments" class="nav-link" data-page="payments" id="navPayments">
+            <svg class="nav-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect width="20" height="14" x="2" y="5" rx="2"/>
+              <line x1="2" x2="22" y1="10" y2="10"/>
+            </svg>
+            <span class="nav-text">Payments</span>
+            <svg class="chevron-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
+          </a>
+          <div class="sub-nav-menu" id="paymentsSubMenu">
+            <a href="#" class="sub-nav-link" id="openCardPaymentModalNav">💳 Make Card Payment</a>
+            <a href="#" class="sub-nav-link" id="openQuickSendNav">↗ Send & Transfer</a>
+            <a href="#" class="sub-nav-link" id="openRequestMoneyNav">↙ Request Money</a>
           </div>
         </div>
 
-        <button class="reset-btn" id="resetDataBtn" title="Reset to Default Demo State">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/>
+        <a href="#transactions" class="nav-link" data-page="transactions">
+          <svg class="nav-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="m17 2 4 4-4 4"/>
+            <path d="M3 11v-1a4 4 0 0 1 4-4h14"/>
+            <path d="m7 22-4-4 4-4"/>
+            <path d="M21 13v1a4 4 0 0 1-4 4H3"/>
           </svg>
-          <span>Reset Demo</span>
+          <span class="nav-text">Transactions</span>
+        </a>
+
+        <a href="#invoices" class="nav-link" data-page="invoices">
+          <svg class="nav-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/>
+            <polyline points="14 2 14 8 20 8"/>
+            <line x1="16" y1="13" x2="8" y2="13"/>
+            <line x1="16" y1="17" x2="8" y2="17"/>
+            <line x1="10" y1="9" x2="8" y2="9"/>
+          </svg>
+          <span class="nav-text">Invoices</span>
+        </a>
+
+        <div class="nav-group">
+          <a href="#cards" class="nav-link" data-page="cards" id="navCards">
+            <svg class="nav-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect width="20" height="14" x="2" y="5" rx="2"/>
+              <line x1="2" x2="22" y1="10" y2="10"/>
+            </svg>
+            <span class="nav-text">Cards</span>
+            <svg class="chevron-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
+          </a>
+          <div class="sub-nav-menu" id="cardsSubMenu">
+            <a href="#" class="sub-nav-link" id="navAddCardBtn">＋ Add New Card</a>
+            <a href="#" class="sub-nav-link" id="navTopUpCardBtn">⚡ Top Up Card</a>
+          </div>
+        </div>
+
+        <a href="#saving" class="nav-link" data-page="saving">
+          <svg class="nav-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M19 5H5a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2z"/>
+            <circle cx="12" cy="12" r="2"/>
+          </svg>
+          <span class="nav-text">Saving Plans</span>
+        </a>
+
+        <a href="#investments" class="nav-link" data-page="investments">
+          <svg class="nav-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="12" y1="20" x2="12" y2="10"/>
+            <line x1="18" y1="20" x2="18" y2="4"/>
+            <line x1="6" y1="20" x2="6" y2="16"/>
+          </svg>
+          <span class="nav-text">Investments</span>
+        </a>
+
+        <a href="#inbox" class="nav-link" data-page="inbox">
+          <svg class="nav-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="22 12 16 12 14 15 10 15 8 12 2 12"/>
+            <path d="M5.45 5.11 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"/>
+          </svg>
+          <span class="nav-text">Inbox</span>
+          <span class="nav-badge">21</span>
+        </a>
+
+        <a href="#insights" class="nav-link" data-page="insights">
+          <svg class="nav-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M2 12h5l3 9 4-18 3 9h5"/>
+          </svg>
+          <span class="nav-text">Insights</span>
+        </a>
+
+        <a href="#settings" class="nav-link" data-page="settings">
+          <svg class="nav-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="3"/>
+            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+          </svg>
+          <span class="nav-text">Settings</span>
+        </a>
+      </nav>
+
+      <!-- Sidebar Promo Card: Go Pro! -->
+      <div class="sidebar-promo-card">
+        <div class="promo-icon-bg">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#22C55E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect width="18" height="11" x="3" y="11" rx="2" ry="2"/>
+            <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+          </svg>
+        </div>
+        <h4 class="promo-title">Go Pro!</h4>
+        <p class="promo-desc">Full financial insights with analytics and graphs.</p>
+        <button class="promo-btn" id="upgradeBtn">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 15V3m0 0L7 8m5-5l5 5M5 21h14"/></svg>
+          <span>Upgrade</span>
         </button>
       </div>
-    </header>
+    </aside>
 
-    <!-- Main Dashboard Container -->
-    <main class="dashboard-main">
-      <!-- Left Column: Balances, Cards, Quick Actions -->
-      <section class="overview-section">
-        <!-- Main Balance Card -->
-        <div class="balance-hero-card">
-          <div class="balance-header">
-            <div>
-              <span class="balance-label">Total Net Portfolio</span>
-              <div class="balance-amount-wrapper">
-                <span class="currency-symbol">$</span>
-                <span class="balance-amount" id="totalBalanceDisplay">0.00</span>
-                <button class="toggle-visibility-btn" id="toggleBalanceBtn" title="Toggle Privacy Mode" aria-label="Toggle Balance Visibility">
-                  <svg id="eyeIcon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
-                    <circle cx="12" cy="12" r="3"></circle>
+    <!-- MAIN CONTENT AREA -->
+    <div class="main-wrapper">
+      
+      <!-- TOP NAVIGATION BAR -->
+      <header class="header-bar">
+        <div class="header-left">
+          <button class="mobile-sidebar-toggle" id="sidebarToggle" aria-label="Toggle Navigation">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+          </button>
+          <h1 class="page-title" id="pageTitle">Dashboard</h1>
+        </div>
+
+        <!-- Search Bar -->
+        <div class="search-box">
+          <svg class="search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#94A3B8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"/>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+          </svg>
+          <input type="text" id="globalSearch" placeholder="Search transactions, recipients, cards..." autocomplete="off">
+        </div>
+
+        <!-- Header Actions & User Profile -->
+        <div class="header-right">
+          <button class="icon-btn" id="notificationsBtn" title="Notifications" aria-label="Notifications">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#64748B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/>
+              <path d="M13.73 21a2 2 0 0 1-3.46 0"/>
+            </svg>
+            <span class="icon-dot"></span>
+          </button>
+
+          <button class="icon-btn" id="inboxBtn" title="Messages" aria-label="Messages">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#64748B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+              <polyline points="22,6 12,13 2,6"/>
+            </svg>
+          </button>
+
+          <div class="user-profile-widget" id="userProfileBtn">
+            <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=120&q=80" alt="Fokhrul Islam Avatar" class="user-avatar">
+            <div class="user-meta">
+              <span class="user-name">Fokhrul Islam</span>
+              <span class="user-role">Finance</span>
+            </div>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#64748B" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
+          </div>
+        </div>
+      </header>
+
+      <!-- DASHBOARD BODY GRID -->
+      <main class="dashboard-grid">
+        
+        <!-- LEFT/CENTER DASHBOARD CONTENT (2 COLUMNS FIT) -->
+        <div class="grid-main-column">
+          
+          <!-- TOP THREE STATS CARDS -->
+          <section class="stats-row">
+            <!-- Total Income Card -->
+            <div class="stat-card">
+              <div class="stat-header">
+                <span class="stat-label">Total Income</span>
+                <div class="stat-icon-bg orange-icon">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#F97316" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="12" y1="1" x2="12" y2="23"/>
+                    <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
                   </svg>
+                </div>
+              </div>
+              <div class="stat-value" id="incomeDisplay">$78,000</div>
+              <div class="stat-subtext">
+                <span class="stat-badge green-badge">+ 1.78 %</span>
+                <span class="stat-period">Since Last Week</span>
+              </div>
+            </div>
+
+            <!-- Total Expense Card -->
+            <div class="stat-card">
+              <div class="stat-header">
+                <span class="stat-label">Total Expense</span>
+                <div class="stat-icon-bg blue-icon">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#3B82F6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="23 18 13.5 8.5 8.5 13.5 1 6"/>
+                    <polyline points="17 18 23 18 23 12"/>
+                  </svg>
+                </div>
+              </div>
+              <div class="stat-value" id="expenseDisplay">$43,000</div>
+              <div class="stat-subtext">
+                <span class="stat-badge red-badge">- 1.78 %</span>
+                <span class="stat-period">Since Last Week</span>
+              </div>
+            </div>
+
+            <!-- Total Savings Card -->
+            <div class="stat-card">
+              <div class="stat-header">
+                <span class="stat-label">Total Savings</span>
+                <div class="stat-icon-bg purple-icon">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#A855F7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M19 5H5a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2z"/>
+                    <path d="M12 12a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"/>
+                  </svg>
+                </div>
+              </div>
+              <div class="stat-value" id="savingsDisplay">$56,000</div>
+              <div class="stat-subtext">
+                <span class="stat-badge green-badge">+ 1.78 %</span>
+                <span class="stat-period">Since Last Week</span>
+              </div>
+            </div>
+          </section>
+
+          <!-- MIDDLE SECTION: EARNING IN THE LAST WEEK BAR CHART -->
+          <section class="chart-card">
+            <div class="chart-header">
+              <div class="chart-title-group">
+                <h3 class="chart-title">Earning in The Last Week</h3>
+                <div class="chart-big-metric">
+                  <span class="metric-num" id="earningTotalDisplay">$678,897</span>
+                  <span class="stat-badge green-badge">+ 1.78 %</span>
+                </div>
+              </div>
+
+              <div class="chart-controls">
+                <div class="chart-legend">
+                  <span class="legend-item"><span class="legend-box income-box"></span> Income</span>
+                  <span class="legend-item"><span class="legend-box expense-box"></span> Expense</span>
+                </div>
+                <div class="custom-select-wrap">
+                  <select id="chartPeriodSelect" class="styled-select">
+                    <option value="2029">This Year</option>
+                    <option value="2028">2028</option>
+                    <option value="2027">2027</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <!-- Bar Chart Canvas & Hover Tooltip -->
+            <div class="canvas-wrapper">
+              <canvas id="earningChartCanvas" height="240"></canvas>
+              <!-- Dynamic Hover Card Tooltip -->
+              <div class="chart-hover-tooltip hidden" id="chartTooltip">
+                <div class="tooltip-month" id="ttMonth">June 2029</div>
+                <div class="tooltip-row"><span>Income</span> <strong id="ttIncome">$4,000</strong></div>
+                <div class="tooltip-row"><span>Expense</span> <strong id="ttExpense">$6,000</strong></div>
+              </div>
+            </div>
+          </section>
+
+          <!-- BOTTOM SECTION: TRANSACTION HISTORY TABLE -->
+          <section class="table-card">
+            <div class="table-header">
+              <h3 class="table-title">Transaction History</h3>
+
+              <div class="table-actions">
+                <select id="tableYearFilter" class="styled-select">
+                  <option value="ALL">This Year</option>
+                  <option value="2025">2025</option>
+                  <option value="2026">2026</option>
+                </select>
+
+                <button class="filter-btn" id="openFilterBtn">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/>
+                  </svg>
+                  <span>Filter</span>
                 </button>
               </div>
             </div>
-            <div class="balance-growth-badge">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline>
-                <polyline points="17 6 23 6 23 12"></polyline>
-              </svg>
-              <span>+12.4% this month</span>
-            </div>
-          </div>
 
-          <!-- Accounts Sub-breakdown -->
-          <div class="accounts-grid">
-            <div class="account-item">
-              <div class="account-icon checking-bg">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#818cf8" stroke-width="2">
-                  <rect x="2" y="5" width="20" height="14" rx="2"></rect>
-                  <line x1="2" y1="10" x2="22" y2="10"></line>
+            <!-- Table Container -->
+            <div class="table-responsive">
+              <table class="finsight-table">
+                <thead>
+                  <tr>
+                    <th class="sortable" data-sort="title">Transaction Name <span class="sort-icon">↕</span></th>
+                    <th class="sortable" data-sort="date">Date & Time <span class="sort-icon">↕</span></th>
+                    <th class="sortable" data-sort="amount">Amount <span class="sort-icon">↕</span></th>
+                    <th class="sortable" data-sort="note">Note <span class="sort-icon">↕</span></th>
+                    <th class="sortable" data-sort="status">Status <span class="sort-icon">↕</span></th>
+                  </tr>
+                </thead>
+                <tbody id="transactionTableBody">
+                  <!-- Dynamically populated via app.js -->
+                </tbody>
+              </table>
+
+              <!-- Empty Table State -->
+              <div id="tableEmptyState" class="table-empty hidden">
+                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#94A3B8" stroke-width="1.5">
+                  <circle cx="12" cy="12" r="10"/>
+                  <line x1="8" y1="12" x2="16" y2="12"/>
                 </svg>
-              </div>
-              <div class="account-details">
-                <span class="account-type">Checking Account</span>
-                <span class="account-val" id="checkingBalanceDisplay">$0.00</span>
+                <p>No transactions match your search or filter.</p>
               </div>
             </div>
+          </section>
 
-            <div class="account-item">
-              <div class="account-icon savings-bg">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#34d399" stroke-width="2">
-                  <path d="M19 5H5a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2z"></path>
-                  <path d="M12 12a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"></path>
-                </svg>
-              </div>
-              <div class="account-details">
-                <span class="account-type">Savings Vault</span>
-                <span class="account-val" id="savingsBalanceDisplay">$0.00</span>
-              </div>
-            </div>
-
-            <div class="account-item">
-              <div class="account-icon investments-bg">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fbbf24" stroke-width="2">
-                  <line x1="12" y1="1" x2="12" y2="23"></line>
-                  <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
-                </svg>
-              </div>
-              <div class="account-details">
-                <span class="account-type">Investment Portfolio</span>
-                <span class="account-val" id="investmentBalanceDisplay">$0.00</span>
-              </div>
-            </div>
-          </div>
-
-          <!-- Quick Action Buttons -->
-          <div class="quick-actions-row">
-            <button class="action-btn primary-action" id="openSendModalBtn">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <line x1="22" y1="2" x2="11" y2="13"></line>
-                <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
-              </svg>
-              <span>Transfer</span>
-            </button>
-
-            <button class="action-btn secondary-action" id="openDepositModalBtn">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <line x1="12" y1="5" x2="12" y2="19"></line>
-                <line x1="5" y1="12" x2="19" y2="12"></line>
-              </svg>
-              <span>Deposit</span>
-            </button>
-
-            <button class="action-btn secondary-action" id="openRequestModalBtn">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <polyline points="17 1 21 5 17 9"></polyline>
-                <path d="M3 11V9a4 4 0 0 1 4-4h14"></path>
-                <polyline points="7 23 3 19 7 15"></polyline>
-                <path d="M21 13v2a4 4 0 0 1-4 4H3"></path>
-              </svg>
-              <span>Request</span>
-            </button>
-
-            <button class="action-btn secondary-action" id="openBillsModalBtn">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <rect x="2" y="4" width="20" height="16" rx="2"></rect>
-                <path d="M6 8h4"></path>
-                <path d="M6 12h8"></path>
-                <path d="M6 16h6"></path>
-              </svg>
-              <span>Pay Bills</span>
-            </button>
-          </div>
         </div>
 
-        <!-- Virtual Card & Security Controls Widget -->
-        <div class="card-security-widget">
-          <div class="widget-header">
-            <h3>Virtual Debit Card</h3>
-            <div class="card-status-pill" id="cardStatusPill">
-              <span class="status-dot green-dot" id="statusDot"></span>
-              <span id="statusText">Active</span>
-            </div>
-          </div>
-
-          <!-- Futuristic Credit Card Preview -->
-          <div class="credit-card-preview" id="creditCardContainer">
-            <div class="card-glass-glow"></div>
-            <div class="card-top-row">
-              <span class="card-brand-label">VELO BLACK</span>
-              <svg class="contactless-icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M8.5 14.5A5 5 0 0 0 12 16a5 5 0 0 0 3.5-1.5"></path>
-                <path d="M6 12a8 8 0 0 1 12 0"></path>
-                <path d="M3.5 9.5a11 11 0 0 1 17 0"></path>
-              </svg>
+        <!-- RIGHT SIDEBAR PANEL -->
+        <div class="grid-side-column">
+          
+          <!-- MY CARD WIDGET -->
+          <section class="widget-card my-card-widget">
+            <div class="widget-header">
+              <h3 class="widget-title">My Card</h3>
+              <button class="add-card-btn" id="openAddCardBtn">＋ Add Card</button>
             </div>
 
-            <div class="card-chip-row">
-              <div class="emv-chip"></div>
+            <!-- Mint Green Futuristic Debit Card Graphic -->
+            <div class="debit-card-graphic" id="activeDebitCard">
+              <div class="card-wave-bg"></div>
+              
+              <!-- Card Top Row -->
+              <div class="card-top">
+                <div class="card-brand-dots">
+                  <span></span><span></span><span></span><span></span>
+                </div>
+                <div class="contactless-icon">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+                    <path d="M8.5 14.5A5 5 0 0 0 12 16a5 5 0 0 0 3.5-1.5"/>
+                    <path d="M6 12a8 8 0 0 1 12 0"/>
+                    <path d="M3.5 9.5a11 11 0 0 1 17 0"/>
+                  </svg>
+                </div>
+              </div>
+
+              <!-- Cardholder Name -->
+              <div class="card-holder-name" id="cardHolderDisplay">Fokhrul Islam</div>
+
+              <!-- Card Balance -->
+              <div class="card-balance-block">
+                <span class="card-balance-label">Balance Amount</span>
+                <div class="card-balance-val" id="cardBalanceDisplay">$68,000</div>
+              </div>
+
+              <!-- Card Bottom Details -->
+              <div class="card-bottom">
+                <div class="card-exp">
+                  <span class="meta-label">EXP</span>
+                  <span class="meta-val" id="cardExpDisplay">12/26</span>
+                </div>
+                <div class="card-cvv">
+                  <span class="meta-label">CVV</span>
+                  <span class="meta-val" id="cardCvvDisplay">335</span>
+                </div>
+              </div>
             </div>
 
-            <div class="card-number-row">
-              <span id="cardNumberDisplay" class="card-number">•••• •••• •••• 8842</span>
-              <button class="card-eye-btn" id="revealCardNumBtn" title="Reveal Card Number">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#cbd5e1" stroke-width="2">
-                  <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
-                  <circle cx="12" cy="12" r="3"></circle>
-                </svg>
+            <!-- Card Selector Dots (if multiple cards exist) -->
+            <div class="card-carousel-dots" id="cardCarouselDots">
+              <span class="dot active" data-index="0"></span>
+            </div>
+
+            <!-- 4 Quick Actions Grid -->
+            <div class="card-actions-grid">
+              <button class="quick-act-btn" id="openTopUpModalBtn">
+                <div class="act-icon">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                </div>
+                <span>Top Up</span>
+              </button>
+
+              <button class="quick-act-btn" id="openTransferModalBtn">
+                <div class="act-icon">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+                </div>
+                <span>Transfer</span>
+              </button>
+
+              <button class="quick-act-btn" id="openRequestModalBtn">
+                <div class="act-icon">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="17" y1="7" x2="7" y2="17"/><polyline points="17 17 7 17 7 7"/></svg>
+                </div>
+                <span>Request</span>
+              </button>
+
+              <button class="quick-act-btn" id="openHistoryModalBtn">
+                <div class="act-icon">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                </div>
+                <span>History</span>
               </button>
             </div>
+          </section>
 
-            <div class="card-footer-row">
-              <div>
-                <span class="card-meta-title">CARD HOLDER</span>
-                <span class="card-meta-val">ALEX MORGAN</span>
-              </div>
-              <div>
-                <span class="card-meta-title">EXPIRES</span>
-                <span class="card-meta-val">10/29</span>
-              </div>
-              <div>
-                <span class="card-meta-title">CVV</span>
-                <span class="card-meta-val" id="cardCvvDisplay">***</span>
-              </div>
-              <div class="visa-logo">VISA</div>
+          <!-- DAILY LIMIT WIDGET -->
+          <section class="widget-card daily-limit-widget">
+            <div class="widget-header">
+              <h3 class="widget-title">Daily Limit</h3>
+              <button class="more-options-btn" aria-label="Options">⋮</button>
             </div>
-          </div>
 
-          <!-- Card Controls -->
-          <div class="card-controls-row">
-            <button class="card-ctrl-btn" id="toggleFreezeBtn">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
-                <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
-              </svg>
-              <span id="freezeBtnText">Freeze Card</span>
-            </button>
+            <div class="limit-status-row">
+              <span class="limit-amount-text" id="dailyLimitText"><strong>$2,500.00</strong> spent of $20,000.00</span>
+            </div>
 
-            <button class="card-ctrl-btn" id="copyCardNumBtn">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
-                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
-              </svg>
-              <span>Copy Details</span>
-            </button>
+            <div class="limit-progress-bar-wrap">
+              <div class="limit-progress-fill" id="dailyLimitBar" style="width: 57%;"></div>
+            </div>
+            <div class="limit-percentage" id="dailyLimitPct">57%</div>
+          </section>
 
-            <button class="card-ctrl-btn" id="cardLimitBtn">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <circle cx="12" cy="12" r="3"></circle>
-                <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
-              </svg>
-              <span>Limits</span>
-            </button>
-          </div>
+          <!-- RECENT ACTIVITY WIDGET -->
+          <section class="widget-card recent-activity-widget">
+            <div class="widget-header">
+              <h3 class="widget-title">Recent Activity</h3>
+              <button class="more-options-btn" aria-label="Options">⋮</button>
+            </div>
+
+            <div class="activity-section-label">Today</div>
+
+            <div class="activity-list" id="activityList">
+              <!-- Item 1 -->
+              <div class="activity-item">
+                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=120&q=80" alt="Jamie Smith" class="act-avatar">
+                <div class="act-content">
+                  <p class="act-text"><strong>Jamie Smith</strong> updated account settings</p>
+                  <span class="act-time">16:05 am</span>
+                </div>
+              </div>
+
+              <!-- Item 2 -->
+              <div class="activity-item">
+                <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=120&q=80" alt="Taylor Green" class="act-avatar">
+                <div class="act-content">
+                  <p class="act-text"><strong>Taylor Green</strong> reviewed recent transaction...</p>
+                  <span class="act-time">21:05 pm</span>
+                </div>
+              </div>
+
+              <!-- Item 3 -->
+              <div class="activity-item">
+                <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=120&q=80" alt="Taylor Green" class="act-avatar">
+                <div class="act-content">
+                  <p class="act-text"><strong>Taylor Green</strong> reviewed recent transaction...</p>
+                  <span class="act-time">21:05 pm</span>
+                </div>
+              </div>
+            </div>
+          </section>
+
         </div>
 
-        <!-- Quick Contacts Bar -->
-        <div class="quick-contacts-widget">
-          <div class="widget-header">
-            <h3>Quick Send Contacts</h3>
-            <button class="text-link-btn" id="addContactBtn">+ Add</button>
-          </div>
-          <div class="contacts-scroll-row" id="contactsContainer">
-            <!-- Dynamic contact items rendered by JS -->
-          </div>
-        </div>
-      </section>
-
-      <!-- Right Column: Analytics & Transactions Dashboard -->
-      <section class="analytics-transactions-section">
-        <!-- Analytics & Insights Chart -->
-        <div class="analytics-card">
-          <div class="analytics-header">
-            <div>
-              <h3>Cash Flow & Financial Analytics</h3>
-              <p class="section-subtitle">Real-time breakdown of monthly income vs expenses</p>
-            </div>
-            <div class="period-toggle">
-              <button class="period-btn active" data-period="1M">1M</button>
-              <button class="period-btn" data-period="6M">6M</button>
-              <button class="period-btn" data-period="1Y">1Y</button>
-            </div>
-          </div>
-
-          <div class="chart-container">
-            <canvas id="cashflowCanvas" height="180"></canvas>
-          </div>
-
-          <div class="analytics-summary-row">
-            <div class="summary-metric">
-              <div class="metric-dot green"></div>
-              <div>
-                <span class="metric-title">Total Incoming (30d)</span>
-                <span class="metric-value green-text" id="totalIncomingMetric">$0.00</span>
-              </div>
-            </div>
-            <div class="summary-metric">
-              <div class="metric-dot red"></div>
-              <div>
-                <span class="metric-title">Total Expenses (30d)</span>
-                <span class="metric-value red-text" id="totalExpensesMetric">$0.00</span>
-              </div>
-            </div>
-            <div class="summary-metric">
-              <div class="metric-dot yellow"></div>
-              <div>
-                <span class="metric-title">Pending Liquidity</span>
-                <span class="metric-value yellow-text" id="pendingLiquidityMetric">$0.00</span>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Transactions Section (Main Feature) -->
-        <div class="transactions-card">
-          <div class="transactions-header">
-            <div>
-              <h3>Transaction History</h3>
-              <p class="section-subtitle">Manage pending, incoming, and completed outgoing transfers</p>
-            </div>
-
-            <div class="transactions-actions-bar">
-              <div class="category-select-wrapper">
-                <select id="categoryFilterSelect">
-                  <option value="ALL">All Categories</option>
-                  <option value="Income">Income & Salary</option>
-                  <option value="Transfers">Transfers & P2P</option>
-                  <option value="Shopping">Shopping & Tech</option>
-                  <option value="Bills">Bills & Utilities</option>
-                  <option value="Food & Dining">Food & Dining</option>
-                  <option value="Investment">Investment & Crypto</option>
-                </select>
-              </div>
-            </div>
-          </div>
-
-          <!-- Transaction Filter Tabs -->
-          <div class="filter-tabs-row">
-            <button class="tab-btn active" data-tab="ALL">
-              <span>All Transactions</span>
-              <span class="tab-count" id="countAll">0</span>
-            </button>
-
-            <button class="tab-btn" data-tab="PENDING">
-              <span class="status-indicator yellow-indicator"></span>
-              <span>Pending</span>
-              <span class="tab-count yellow-count" id="countPending">0</span>
-            </button>
-
-            <button class="tab-btn" data-tab="INCOMING">
-              <span class="status-indicator green-indicator"></span>
-              <span>Incoming</span>
-              <span class="tab-count green-count" id="countIncoming">0</span>
-            </button>
-
-            <button class="tab-btn" data-tab="OUTGOING">
-              <span class="status-indicator red-indicator"></span>
-              <span>Outgoing</span>
-              <span class="tab-count red-count" id="countOutgoing">0</span>
-            </button>
-          </div>
-
-          <!-- Transactions List Container -->
-          <div class="transaction-list-wrapper">
-            <div id="transactionList" class="transaction-list">
-              <!-- Dynamically rendered transactions via JS -->
-            </div>
-            
-            <div id="emptyState" class="empty-state hidden">
-              <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#475569" stroke-width="1.5">
-                <circle cx="12" cy="12" r="10"></circle>
-                <line x1="8" y1="12" x2="16" y2="12"></line>
-              </svg>
-              <h4>No transactions found</h4>
-              <p>There are no transactions matching your current search or filter criteria.</p>
-            </div>
-          </div>
-        </div>
-      </section>
-    </main>
+      </main>
+    </div>
   </div>
 
-  <!-- MODALS -->
+  <!-- ==================== MODALS & OVERLAYS ==================== -->
 
-  <!-- Modal 1: Send / Transfer Money -->
-  <div class="modal-backdrop hidden" id="sendMoneyModal">
-    <div class="modal-card">
+  <!-- MODAL 1: CARD PAYMENT CHECKOUT MODAL (NEW FEATURE) -->
+  <div class="modal-backdrop hidden" id="cardPaymentModal">
+    <div class="modal-card modal-medium">
       <div class="modal-header">
         <div class="modal-title-group">
-          <div class="modal-icon-bg indigo-bg">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#818cf8" stroke-width="2">
-              <line x1="22" y1="2" x2="11" y2="13"></line>
-              <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
-            </svg>
+          <div class="modal-icon-bg green-icon-bg">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#22C55E" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
           </div>
           <div>
-            <h3>Send & Transfer Money</h3>
-            <p>Instant or scheduled payment to contacts or IBAN</p>
+            <h3>Make Card Payment</h3>
+            <p>Pay bills, merchants, or send funds using your debit/credit card</p>
           </div>
         </div>
-        <button class="modal-close-btn" id="closeSendModalBtn">&times;</button>
+        <button class="modal-close-btn" id="closeCardPayModalBtn">&times;</button>
       </div>
 
-      <form id="sendMoneyForm" class="modal-body">
+      <form id="cardPaymentForm" class="modal-body">
+        
+        <!-- Step 1: Select Card -->
         <div class="form-group">
-          <label for="sendFromAccount">From Account</label>
-          <select id="sendFromAccount" required>
-            <option value="checking">Checking Account ($<span id="optCheckingVal">0.00</span>)</option>
-            <option value="savings">Savings Vault ($<span id="optSavingsVal">0.00</span>)</option>
+          <label for="payCardSelect">Select Payment Card</label>
+          <select id="payCardSelect" class="form-input" required>
+            <!-- Rendered dynamically -->
           </select>
         </div>
 
+        <!-- Step 2: Merchant / Recipient -->
         <div class="form-group">
-          <label for="recipientInput">Recipient (Email, Name, or IBAN)</label>
-          <input type="text" id="recipientInput" placeholder="e.g. Sarah Jenkins or US89 3704 0022" required>
+          <label for="payRecipient">Merchant / Recipient Name</label>
+          <input type="text" id="payRecipient" class="form-input" placeholder="e.g. Amazon, Electric Utility, Sarah Jenkins" required>
         </div>
 
+        <!-- Step 3: Amount & Category -->
         <div class="form-row">
           <div class="form-group flex-1">
-            <label for="sendAmount">Amount ($ USD)</label>
-            <input type="number" id="sendAmount" placeholder="0.00" step="0.01" min="0.50" required>
+            <label for="payAmount">Payment Amount ($ USD)</label>
+            <input type="number" id="payAmount" class="form-input" placeholder="0.00" step="0.01" min="1.00" required>
           </div>
-
           <div class="form-group flex-1">
-            <label for="sendCategory">Category</label>
-            <select id="sendCategory">
-              <option value="Transfers">Transfers & P2P</option>
+            <label for="payCategory">Category</label>
+            <select id="payCategory" class="form-input">
+              <option value="Payments">Payments & Bills</option>
               <option value="Shopping">Shopping & Tech</option>
               <option value="Food & Dining">Food & Dining</option>
-              <option value="Bills">Bills & Utilities</option>
-              <option value="Investment">Investment & Crypto</option>
+              <option value="Transfers">P2P Transfer</option>
+              <option value="Services">Services & Subscriptions</option>
             </select>
           </div>
         </div>
 
-        <div class="form-group">
-          <label for="sendExecutionType">Execution Type</label>
-          <select id="sendExecutionType">
-            <option value="INSTANT">Instant Settlement (Completed)</option>
-            <option value="PENDING">Clearance Hold (Mark as Pending)</option>
-          </select>
+        <!-- Step 4: Card Security Details -->
+        <div class="card-form-box">
+          <h4 class="box-title">Card Security Verification</h4>
+          
+          <div class="form-group">
+            <label for="cardPayNum">16-Digit Card Number</label>
+            <input type="text" id="cardPayNum" class="form-input" placeholder="4532 •••• •••• 335" maxlength="19" required>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group flex-1">
+              <label for="cardPayExp">Expiry Date</label>
+              <input type="text" id="cardPayExp" class="form-input" placeholder="MM/YY" maxlength="5" required>
+            </div>
+            <div class="form-group flex-1">
+              <label for="cardPayCvv">CVV Code</label>
+              <input type="password" id="cardPayCvv" class="form-input" placeholder="•••" maxlength="4" required>
+            </div>
+          </div>
         </div>
 
         <div class="form-group">
-          <label for="sendNote">Note / Description (Optional)</label>
-          <input type="text" id="sendNote" placeholder="e.g. Dinner split, Rent, Freelance payment">
+          <label for="payNote">Payment Note / Reference (Optional)</label>
+          <input type="text" id="payNote" class="form-input" placeholder="e.g. Order #884102 clearance">
         </div>
 
         <div class="modal-footer">
-          <button type="button" class="btn-secondary" id="cancelSendBtn">Cancel</button>
-          <button type="submit" class="btn-primary">Confirm Transfer</button>
+          <button type="button" class="btn-secondary" id="cancelCardPayBtn">Cancel</button>
+          <button type="submit" class="btn-primary green-btn" id="submitCardPayBtn">Process Card Payment</button>
         </div>
       </form>
     </div>
   </div>
 
-  <!-- Modal 2: Deposit / Add Funds -->
-  <div class="modal-backdrop hidden" id="depositModal">
+  <!-- MODAL 2: ADD NEW CARD MODAL -->
+  <div class="modal-backdrop hidden" id="addCardModal">
     <div class="modal-card">
       <div class="modal-header">
         <div class="modal-title-group">
-          <div class="modal-icon-bg green-bg">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#34d399" stroke-width="2">
-              <line x1="12" y1="5" x2="12" y2="19"></line>
-              <line x1="5" y1="12" x2="19" y2="12"></line>
-            </svg>
+          <div class="modal-icon-bg green-icon-bg">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#22C55E" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
           </div>
           <div>
-            <h3>Deposit & Add Funds</h3>
-            <p>Add funds to your checking or savings account</p>
+            <h3>Add New Payment Card</h3>
+            <p>Issue a new virtual debit or credit card to your account</p>
           </div>
         </div>
-        <button class="modal-close-btn" id="closeDepositModalBtn">&times;</button>
+        <button class="modal-close-btn" id="closeAddCardModalBtn">&times;</button>
       </div>
 
-      <form id="depositForm" class="modal-body">
+      <form id="addCardForm" class="modal-body">
         <div class="form-group">
-          <label for="depositTargetAccount">Destination Account</label>
-          <select id="depositTargetAccount" required>
-            <option value="checking">Checking Account</option>
-            <option value="savings">Savings Vault</option>
-            <option value="investment">Investment Portfolio</option>
-          </select>
+          <label for="newCardHolder">Cardholder Full Name</label>
+          <input type="text" id="newCardHolder" class="form-input" value="Fokhrul Islam" required>
         </div>
 
         <div class="form-group">
-          <label for="depositSource">Source Method</label>
-          <select id="depositSource">
-            <option value="External Bank (Chase ****9210)">External Bank (Chase ****9210)</option>
-            <option value="Debit Card (Capital One ****1044)">Debit Card (Capital One ****1044)</option>
-            <option value="Wire Transfer / Direct Deposit">Wire Transfer / Direct Deposit</option>
-            <option value="Stripe Payout">Stripe Payout</option>
-          </select>
+          <label for="newCardNumber">16-Digit Card Number</label>
+          <input type="text" id="newCardNumber" class="form-input" placeholder="5412 8890 2310 9941" maxlength="19" required>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group flex-1">
+            <label for="newCardExp">Expiry Date (MM/YY)</label>
+            <input type="text" id="newCardExp" class="form-input" placeholder="08/28" maxlength="5" required>
+          </div>
+          <div class="form-group flex-1">
+            <label for="newCardCvv">CVV Code</label>
+            <input type="password" id="newCardCvv" class="form-input" placeholder="492" maxlength="3" required>
+          </div>
         </div>
 
         <div class="form-group">
-          <label for="depositAmount">Deposit Amount ($ USD)</label>
-          <input type="number" id="depositAmount" placeholder="0.00" step="0.01" min="1.00" required>
+          <label for="newCardBalance">Initial Starting Balance ($ USD)</label>
+          <input type="number" id="newCardBalance" class="form-input" value="15000.00" min="100.00" step="0.01" required>
         </div>
 
         <div class="form-group">
-          <label for="depositStatusType">Deposit Speed</label>
-          <select id="depositStatusType">
-            <option value="INCOMING">Instant Direct Deposit (Incoming)</option>
-            <option value="PENDING">Standard Clearing (Pending 1-2 Days)</option>
+          <label for="newCardTheme">Card Design Theme</label>
+          <select id="newCardTheme" class="form-input">
+            <option value="mint">FinSight Mint Emerald (Default)</option>
+            <option value="obsidian">Obsidian Matte Black</option>
+            <option value="royal">Royal Sapphire Blue</option>
+            <option value="gold">Champagne Rose Gold</option>
           </select>
         </div>
 
         <div class="modal-footer">
-          <button type="button" class="btn-secondary" id="cancelDepositBtn">Cancel</button>
-          <button type="submit" class="btn-primary green-btn">Process Deposit</button>
+          <button type="button" class="btn-secondary" id="cancelAddCardBtn">Cancel</button>
+          <button type="submit" class="btn-primary green-btn">Issue Card</button>
         </div>
       </form>
     </div>
   </div>
 
-  <!-- Modal 3: Request Money -->
+  <!-- MODAL 3: TOP UP CARD MODAL -->
+  <div class="modal-backdrop hidden" id="topUpCardModal">
+    <div class="modal-card">
+      <div class="modal-header">
+        <div class="modal-title-group">
+          <div class="modal-icon-bg green-icon-bg">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#22C55E" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          </div>
+          <div>
+            <h3>Top Up Card Balance</h3>
+            <p>Instantly deposit funds onto your card</p>
+          </div>
+        </div>
+        <button class="modal-close-btn" id="closeTopUpModalBtn">&times;</button>
+      </div>
+
+      <form id="topUpForm" class="modal-body">
+        <div class="form-group">
+          <label for="topUpSource">Funding Source</label>
+          <select id="topUpSource" class="form-input" required>
+            <option value="Chase External Checking (****9210)">Chase External Checking (****9210)</option>
+            <option value="Capital One Savings (****1044)">Capital One Savings (****1044)</option>
+            <option value="Apple Pay Direct">Apple Pay Direct</option>
+            <option value="Stripe Business Vault">Stripe Business Vault</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="topUpAmount">Top Up Amount ($ USD)</label>
+          <input type="number" id="topUpAmount" class="form-input" placeholder="500.00" step="0.01" min="10.00" required>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn-secondary" id="cancelTopUpBtn">Cancel</button>
+          <button type="submit" class="btn-primary green-btn">Add Funds Now</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL 4: TRANSFER / QUICK SEND MODAL -->
+  <div class="modal-backdrop hidden" id="transferModal">
+    <div class="modal-card">
+      <div class="modal-header">
+        <div class="modal-title-group">
+          <div class="modal-icon-bg orange-icon-bg">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#F97316" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+          </div>
+          <div>
+            <h3>Send & Transfer Funds</h3>
+            <p>Direct transfer to contacts, IBAN, or bank account</p>
+          </div>
+        </div>
+        <button class="modal-close-btn" id="closeTransferModalBtn">&times;</button>
+      </div>
+
+      <form id="transferForm" class="modal-body">
+        <div class="form-group">
+          <label for="transferRecipient">Recipient (Email, Name, or IBAN)</label>
+          <input type="text" id="transferRecipient" class="form-input" placeholder="e.g. Taylor Green or US90 3210 9942" required>
+        </div>
+
+        <div class="form-group">
+          <label for="transferAmount">Transfer Amount ($ USD)</label>
+          <input type="number" id="transferAmount" class="form-input" placeholder="0.00" step="0.01" min="1.00" required>
+        </div>
+
+        <div class="form-group">
+          <label for="transferNote">Note / Description</label>
+          <input type="text" id="transferNote" class="form-input" placeholder="e.g. Rent share, Project milestone">
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn-secondary" id="cancelTransferBtn">Cancel</button>
+          <button type="submit" class="btn-primary green-btn">Complete Transfer</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL 5: REQUEST MONEY MODAL -->
   <div class="modal-backdrop hidden" id="requestModal">
     <div class="modal-card">
       <div class="modal-header">
         <div class="modal-title-group">
-          <div class="modal-icon-bg purple-bg">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#a855f7" stroke-width="2">
-              <polyline points="17 1 21 5 17 9"></polyline>
-              <path d="M3 11V9a4 4 0 0 1 4-4h14"></path>
-            </svg>
+          <div class="modal-icon-bg purple-icon-bg">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#A855F7" stroke-width="2"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/></svg>
           </div>
           <div>
             <h3>Request Money</h3>
-            <p>Send a digital request invoice to anyone</p>
+            <p>Create digital invoice payment request</p>
           </div>
         </div>
         <button class="modal-close-btn" id="closeRequestModalBtn">&times;</button>
@@ -537,103 +744,115 @@
 
       <form id="requestForm" class="modal-body">
         <div class="form-group">
-          <label for="requestPayer">Request From (Contact / Email)</label>
-          <input type="text" id="requestPayer" placeholder="e.g. David Miller (david@example.com)" required>
+          <label for="reqPayer">Request From (Contact Name / Email)</label>
+          <input type="text" id="reqPayer" class="form-input" placeholder="e.g. Jamie Smith (jamie@example.com)" required>
         </div>
 
         <div class="form-group">
-          <label for="requestAmount">Requested Amount ($ USD)</label>
-          <input type="number" id="requestAmount" placeholder="0.00" step="0.01" min="1.00" required>
+          <label for="reqAmount">Requested Amount ($ USD)</label>
+          <input type="number" id="reqAmount" class="form-input" placeholder="0.00" step="0.01" min="1.00" required>
         </div>
 
         <div class="form-group">
-          <label for="requestReason">Reason / Reference</label>
-          <input type="text" id="requestReason" placeholder="e.g. Concert tickets reimbursement" required>
+          <label for="reqNote">Reason / Item Reference</label>
+          <input type="text" id="reqNote" class="form-input" placeholder="e.g. Conference reimbursement" required>
         </div>
 
         <div class="modal-footer">
           <button type="button" class="btn-secondary" id="cancelRequestBtn">Cancel</button>
-          <button type="submit" class="btn-primary purple-btn">Send Payment Request</button>
+          <button type="submit" class="btn-primary green-btn">Send Request</button>
         </div>
       </form>
     </div>
   </div>
 
-  <!-- Modal 4: Pay Bills -->
-  <div class="modal-backdrop hidden" id="billsModal">
+  <!-- MODAL 6: FILTER TRANSACTIONS MODAL -->
+  <div class="modal-backdrop hidden" id="filterModal">
     <div class="modal-card">
       <div class="modal-header">
+        <h3>Filter Transactions</h3>
+        <button class="modal-close-btn" id="closeFilterModalBtn">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label for="filterStatus">Status</label>
+          <select id="filterStatus" class="form-input">
+            <option value="ALL">All Statuses</option>
+            <option value="Completed">Completed</option>
+            <option value="Failed">Failed</option>
+            <option value="Pending">Pending</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="filterCategory">Category</label>
+          <select id="filterCategory" class="form-input">
+            <option value="ALL">All Categories</option>
+            <option value="Payments">Payments</option>
+            <option value="Shopping">Shopping</option>
+            <option value="Income">Income</option>
+            <option value="Transfers">Transfers</option>
+            <option value="Services">Services</option>
+          </select>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn-secondary" id="resetFilterBtn">Reset Filters</button>
+          <button type="button" class="btn-primary green-btn" id="applyFilterBtn">Apply Filters</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL 7: TRANSACTION RECEIPT MODAL -->
+  <div class="modal-backdrop hidden" id="receiptModal">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3>Transaction Receipt</h3>
+        <button class="modal-close-btn" id="closeReceiptModalBtn">&times;</button>
+      </div>
+      <div class="modal-body" id="receiptModalContent">
+        <!-- Dynamically rendered receipt HTML -->
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn-secondary" id="printReceiptBtn">🖨 Print Receipt</button>
+        <button type="button" class="btn-primary green-btn" id="closeReceiptBtn">Done</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- OTP SIMULATION MODAL (3D SECURE CHECKOUT) -->
+  <div class="modal-backdrop hidden" id="otpModal">
+    <div class="modal-card modal-small">
+      <div class="modal-header">
         <div class="modal-title-group">
-          <div class="modal-icon-bg amber-bg">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2">
-              <rect x="2" y="4" width="20" height="16" rx="2"></rect>
-              <path d="M6 8h4"></path>
-            </svg>
+          <div class="modal-icon-bg green-icon-bg">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#22C55E" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
           </div>
           <div>
-            <h3>Pay Bills & Services</h3>
-            <p>Quick one-click bill settlement</p>
+            <h3>3D Secure Verification</h3>
+            <p>Enter 4-digit code sent to your phone</p>
           </div>
         </div>
-        <button class="modal-close-btn" id="closeBillsModalBtn">&times;</button>
       </div>
 
-      <div class="modal-body">
-        <div class="bills-list-grid">
-          <div class="bill-card-item" data-biller="Electric Utility Corp" data-amount="134.50" data-cat="Bills">
-            <div class="bill-card-left">
-              <div class="bill-icon-box yellow-box">⚡</div>
-              <div>
-                <span class="bill-name">CleanEnergy Power</span>
-                <span class="bill-due">Due in 3 days • $134.50</span>
-              </div>
-            </div>
-            <button class="bill-pay-now-btn">Pay $134.50</button>
-          </div>
-
-          <div class="bill-card-item" data-biller="Fiber Internet Provider" data-amount="79.99" data-cat="Bills">
-            <div class="bill-card-left">
-              <div class="bill-icon-box blue-box">🌐</div>
-              <div>
-                <span class="bill-name">Gigabit Fiber Internet</span>
-                <span class="bill-due">Due in 7 days • $79.99</span>
-              </div>
-            </div>
-            <button class="bill-pay-now-btn">Pay $79.99</button>
-          </div>
-
-          <div class="bill-card-item" data-biller="Cloud Server Hosting" data-amount="45.00" data-cat="Bills">
-            <div class="bill-card-left">
-              <div class="bill-icon-box purple-box">☁️</div>
-              <div>
-                <span class="bill-name">AWS Cloud Infra</span>
-                <span class="bill-due">Auto-billing active • $45.00</span>
-              </div>
-            </div>
-            <button class="bill-pay-now-btn">Pay $45.00</button>
-          </div>
+      <div class="modal-body text-center">
+        <p class="otp-instruction">Verification code sent to <strong>+1 (•••) •••-8842</strong></p>
+        <div class="otp-input-group">
+          <input type="text" maxlength="1" class="otp-box" autofocus>
+          <input type="text" maxlength="1" class="otp-box">
+          <input type="text" maxlength="1" class="otp-box">
+          <input type="text" maxlength="1" class="otp-box">
+        </div>
+        <p class="otp-hint">Demo verification code: <strong>1 2 3 4</strong></p>
+        <div class="modal-footer justify-center">
+          <button type="button" class="btn-primary green-btn" id="confirmOtpBtn">Confirm & Pay</button>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- Modal 5: Transaction Detail Drawer / Modal -->
-  <div class="modal-backdrop hidden" id="txDetailModal">
-    <div class="modal-card">
-      <div class="modal-header">
-        <div class="modal-title-group">
-          <h3>Transaction Detail Receipt</h3>
-        </div>
-        <button class="modal-close-btn" id="closeTxDetailBtn">&times;</button>
-      </div>
-
-      <div class="modal-body" id="txDetailBody">
-        <!-- Dynamically injected receipt info -->
-      </div>
-    </div>
-  </div>
-
-  <!-- Toast Notification System Container -->
+  <!-- TOAST CONTAINER -->
   <div id="toastContainer" class="toast-container"></div>
 
   <script src="app.js"></script>

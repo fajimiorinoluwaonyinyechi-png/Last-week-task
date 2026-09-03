@@ -1,150 +1,134 @@
 /**
- * Velo Vault - Modern Fintech Dashboard Core Script
- * Uses localStorage for full state persistence.
+ * FinSight - Core Application Logic
+ * Interactive Fintech Dashboard with Card Payment & Card Management
  */
 
-const STORAGE_KEY = 'velo_fintech_dashboard_state_v1';
+const STORAGE_KEY = 'finsight_dashboard_state_v2';
 
-// Initial Seed State Generator
+// --------------------------------------------------------------------------
+// Default State Generator
+// --------------------------------------------------------------------------
 function getInitialState() {
   return {
-    balances: {
-      checking: 28450.00,
-      savings: 14200.00,
-      investment: 5640.50
-    },
-    hideBalance: false,
-    card: {
-      isFrozen: false,
-      isNumRevealed: false,
-      number: "4532 8901 2341 8842",
-      expiry: "10/29",
-      cvv: "892"
-    },
-    contacts: [
-      { name: "Sarah J.", full: "Sarah Jenkins", email: "sarah.j@example.com", avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=120&q=80" },
-      { name: "Marcus V.", full: "Marcus Vance", email: "marcus.v@example.com", avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=120&q=80" },
-      { name: "Elena R.", full: "Elena Rostova", email: "elena.r@example.com", avatar: "https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=120&q=80" },
-      { name: "David M.", full: "David Miller", email: "david.m@example.com", avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=120&q=80" },
-      { name: "Amara O.", full: "Amara Okafor", email: "amara.o@example.com", avatar: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=120&q=80" }
+    income: 78000.00,
+    expense: 43000.00,
+    savings: 56000.00,
+    earningTotal: 678897.00,
+    dailySpent: 2500.00,
+    dailyLimit: 20000.00,
+    activeCardIndex: 0,
+    cards: [
+      {
+        id: "card-01",
+        holder: "Fokhrul Islam",
+        number: "4532 8901 2341 0335",
+        exp: "12/26",
+        cvv: "335",
+        balance: 68000.00,
+        theme: "mint"
+      },
+      {
+        id: "card-02",
+        holder: "Fokhrul Islam",
+        number: "5412 9044 1120 8842",
+        exp: "10/28",
+        cvv: "912",
+        balance: 14500.00,
+        theme: "obsidian"
+      }
+    ],
+    monthlyData: [
+      { month: "Jan", income: 3200, expense: 1800 },
+      { month: "Feb", income: 1200, expense: 2100 },
+      { month: "Mar", income: 2400, expense: 4100 },
+      { month: "Apr", income: 4000, expense: 6000 },
+      { month: "May", income: 1800, expense: 2300 },
+      { month: "Jun", income: 1900, expense: 4800 },
+      { month: "Jul", income: 5800, expense: 1200 },
+      { month: "Aug", income: 3400, expense: 1500 },
+      { month: "Sep", income: 4900, expense: 2100 },
+      { month: "Oct", income: 2400, expense: 1800 },
+      { month: "Nov", income: 2100, expense: 2400 },
+      { month: "Dec", income: 1800, expense: 1200 }
     ],
     transactions: [
       {
-        id: "TX-9042",
-        title: "Apple Store - Watch Ultra 2",
-        amount: 799.00,
-        type: "OUTGOING",
-        status: "PENDING",
+        id: "TX-1001",
+        name: "Electricity Bill",
+        sub: "Payments",
+        date: "2025-03-01 04:28:48",
+        amount: 295.81,
+        note: "Payment for monthly electricity bill",
+        status: "Failed",
+        category: "Payments",
+        year: "2025"
+      },
+      {
+        id: "TX-1002",
+        name: "Weekly Groceries",
+        sub: "Shopping",
+        date: "2025-03-01 04:28:48",
+        amount: 226.25,
+        note: "Groceries shopping at local supermarket",
+        status: "Completed",
         category: "Shopping",
-        account: "checking",
-        date: "2026-08-31 10:14",
-        icon: "⌚",
-        recipient: "Apple Retail US",
-        note: "Awaiting bank clearance verification"
+        year: "2025"
       },
       {
-        id: "TX-9041",
-        title: "Acme Corp - Monthly Salary",
+        id: "TX-1003",
+        name: "Acme Payroll Direct",
+        sub: "Income",
+        date: "2025-02-28 09:00:00",
         amount: 4850.00,
-        type: "INCOMING",
-        status: "COMPLETED",
+        note: "Monthly salary direct deposit",
+        status: "Completed",
         category: "Income",
-        account: "checking",
-        date: "2026-08-30 08:30",
-        icon: "💰",
-        recipient: "Acme Payroll Direct",
-        note: "Direct deposit monthly payroll"
+        year: "2025"
       },
       {
-        id: "TX-9040",
-        title: "Stripe Payout - Consulting",
-        amount: 1250.00,
-        type: "INCOMING",
-        status: "PENDING",
-        category: "Income",
-        account: "checking",
-        date: "2026-08-30 16:45",
-        icon: "⚡",
-        recipient: "Stripe Payouts",
-        note: "P2P Consulting invoice hold"
+        id: "TX-1004",
+        name: "Apple Store Watch Ultra",
+        sub: "Shopping",
+        date: "2025-02-25 14:12:00",
+        amount: 799.00,
+        note: "Apple Store card purchase",
+        status: "Pending",
+        category: "Shopping",
+        year: "2025"
       },
       {
-        id: "TX-9039",
-        title: "Whole Foods Organic Market",
-        amount: 142.80,
-        type: "OUTGOING",
-        status: "COMPLETED",
-        category: "Food & Dining",
-        account: "checking",
-        date: "2026-08-29 19:20",
-        icon: "🛒",
-        recipient: "Whole Foods Market",
-        note: "Weekly grocery purchase"
+        id: "TX-1005",
+        name: "Fiber Internet Gigabit",
+        sub: "Payments",
+        date: "2025-02-20 11:45:00",
+        amount: 89.99,
+        note: "Monthly high-speed internet subscription",
+        status: "Completed",
+        category: "Payments",
+        year: "2025"
+      }
+    ],
+    activities: [
+      {
+        id: "act-1",
+        name: "Jamie Smith",
+        text: "updated account settings",
+        time: "16:05 am",
+        avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=120&q=80"
       },
       {
-        id: "TX-9038",
-        title: "Elena R. - Dinner Split",
-        amount: 45.00,
-        type: "INCOMING",
-        status: "COMPLETED",
-        category: "Transfers",
-        account: "checking",
-        date: "2026-08-28 21:10",
-        icon: "🍽️",
-        recipient: "Elena Rostova",
-        note: "Italian bistro dinner split"
+        id: "act-2",
+        name: "Taylor Green",
+        text: "reviewed recent transaction...",
+        time: "21:05 pm",
+        avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=120&q=80"
       },
       {
-        id: "TX-9037",
-        title: "TechFund Growth ETF Dividend",
-        amount: 320.50,
-        type: "INCOMING",
-        status: "COMPLETED",
-        category: "Investment",
-        account: "investment",
-        date: "2026-08-27 11:00",
-        icon: "📈",
-        recipient: "Vanguard ETF Payout",
-        note: "Q3 Dividend Payout"
-      },
-      {
-        id: "TX-9036",
-        title: "Netflix Premium Subscription",
-        amount: 19.99,
-        type: "OUTGOING",
-        status: "COMPLETED",
-        category: "Bills",
-        account: "checking",
-        date: "2026-08-26 14:00",
-        icon: "🎬",
-        recipient: "Netflix Inc.",
-        note: "Recurring monthly entertainment"
-      },
-      {
-        id: "TX-9035",
-        title: "Uber Ride - Airport Express",
-        amount: 42.50,
-        type: "OUTGOING",
-        status: "PENDING",
-        category: "Transfers",
-        account: "checking",
-        date: "2026-08-26 09:15",
-        icon: "🚗",
-        recipient: "Uber Technologies",
-        note: "Ride pre-authorization"
-      },
-      {
-        id: "TX-9034",
-        title: "CleanEnergy Utilities Settlement",
-        amount: 134.50,
-        type: "OUTGOING",
-        status: "COMPLETED",
-        category: "Bills",
-        account: "checking",
-        date: "2026-08-24 10:00",
-        icon: "⚡",
-        recipient: "CleanEnergy Utility Corp",
-        note: "Electricity bill settlement"
+        id: "act-3",
+        name: "Taylor Green",
+        text: "reviewed recent transaction...",
+        time: "21:05 pm",
+        avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=120&q=80"
       }
     ]
   };
@@ -152,670 +136,606 @@ function getInitialState() {
 
 // Global App State
 let state = loadState();
-let activeTab = 'ALL';
-let activePeriod = '1M';
 
-// Local Storage Handlers
 function loadState() {
-  const saved = localStorage.getItem(STORAGE_KEY);
-  if (saved) {
-    try {
-      return JSON.parse(saved);
-    } catch (e) {
-      console.error("Failed to parse saved state, fallback to initial", e);
-    }
+  try {
+    const saved = localStorage.getItem(STORAGE_KEY);
+    return saved ? JSON.parse(saved) : getInitialState();
+  } catch (e) {
+    return getInitialState();
   }
-  const initial = getInitialState();
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(initial));
-  return initial;
 }
 
 function saveState() {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
-}
-
-// Currency Formatter
-function formatCurrency(val) {
-  return new Intl.NumberFormat('en-US', {
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2
-  }).format(val);
-}
-
-// DOM Rendering Functions
-function renderBalances() {
-  const total = state.balances.checking + state.balances.savings + state.balances.investment;
-
-  const totalEl = document.getElementById('totalBalanceDisplay');
-  const checkingEl = document.getElementById('checkingBalanceDisplay');
-  const savingsEl = document.getElementById('savingsBalanceDisplay');
-  const investEl = document.getElementById('investmentBalanceDisplay');
-
-  const optCheckingVal = document.getElementById('optCheckingVal');
-  const optSavingsVal = document.getElementById('optSavingsVal');
-
-  if (state.hideBalance) {
-    totalEl.textContent = "••••••";
-    checkingEl.textContent = "$••••••";
-    savingsEl.textContent = "$••••••";
-    investEl.textContent = "$••••••";
-  } else {
-    totalEl.textContent = formatCurrency(total);
-    checkingEl.textContent = `$${formatCurrency(state.balances.checking)}`;
-    savingsEl.textContent = `$${formatCurrency(state.balances.savings)}`;
-    investEl.textContent = `$${formatCurrency(state.balances.investment)}`;
-  }
-
-  if (optCheckingVal) optCheckingVal.textContent = formatCurrency(state.balances.checking);
-  if (optSavingsVal) optSavingsVal.textContent = formatCurrency(state.balances.savings);
-}
-
-function renderCard() {
-  const cardContainer = document.getElementById('creditCardContainer');
-  const cardNumDisplay = document.getElementById('cardNumberDisplay');
-  const cvvDisplay = document.getElementById('cardCvvDisplay');
-  const statusPill = document.getElementById('cardStatusPill');
-  const statusDot = document.getElementById('statusDot');
-  const statusText = document.getElementById('statusText');
-  const freezeBtnText = document.getElementById('freezeBtnText');
-
-  if (state.card.isFrozen) {
-    cardContainer.classList.add('frozen');
-    statusPill.classList.add('frozen-pill');
-    statusDot.className = 'status-dot red-dot';
-    statusText.textContent = 'Frozen';
-    freezeBtnText.textContent = 'Unfreeze Card';
-  } else {
-    cardContainer.classList.remove('frozen');
-    statusPill.classList.remove('frozen-pill');
-    statusDot.className = 'status-dot green-dot';
-    statusText.textContent = 'Active';
-    freezeBtnText.textContent = 'Freeze Card';
-  }
-
-  if (state.card.isNumRevealed) {
-    cardNumDisplay.textContent = state.card.number;
-    cvvDisplay.textContent = state.card.cvv;
-  } else {
-    cardNumDisplay.textContent = "•••• •••• •••• " + state.card.number.slice(-4);
-    cvvDisplay.textContent = "***";
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+  } catch (e) {
+    console.error("Failed to save state", e);
   }
 }
 
-function renderContacts() {
-  const container = document.getElementById('contactsContainer');
-  container.innerHTML = state.contacts.map(c => `
-    <div class="contact-avatar-item" data-contact="${c.full}">
-      <div class="contact-img-wrapper">
-        <img src="${c.avatar}" alt="${c.name}" class="contact-img">
-      </div>
-      <span class="contact-name">${c.name}</span>
-    </div>
-  `).join('');
+// --------------------------------------------------------------------------
+// DOM Elements Initialization
+// --------------------------------------------------------------------------
+document.addEventListener("DOMContentLoaded", () => {
+  initUI();
+  renderAll();
+});
 
-  // Attach quick click event to prefill send money modal
-  container.querySelectorAll('.contact-avatar-item').forEach(el => {
-    el.addEventListener('click', () => {
-      const contactName = el.getAttribute('data-contact');
-      document.getElementById('recipientInput').value = contactName;
-      openModal('sendMoneyModal');
+let currentSort = { col: 'date', dir: 'desc' };
+let filterCriteria = { status: 'ALL', category: 'ALL', year: 'ALL', query: '' };
+let pendingCardPayment = null;
+
+function initUI() {
+  // Navigation accordions
+  const navPayments = document.getElementById("navPayments");
+  const paymentsSub = document.getElementById("paymentsSubMenu");
+  navPayments?.addEventListener("click", (e) => {
+    e.preventDefault();
+    paymentsSub?.classList.toggle("open");
+  });
+
+  const navCards = document.getElementById("navCards");
+  const cardsSub = document.getElementById("cardsSubMenu");
+  navCards?.addEventListener("click", (e) => {
+    e.preventDefault();
+    cardsSub?.classList.toggle("open");
+  });
+
+  // Mobile sidebar toggle
+  const sidebarToggle = document.getElementById("sidebarToggle");
+  const sidebar = document.getElementById("sidebar");
+  sidebarToggle?.addEventListener("click", () => {
+    sidebar?.classList.toggle("mobile-open");
+  });
+
+  // Quick Nav Modal Triggers
+  document.getElementById("openCardPaymentModalNav")?.addEventListener("click", (e) => {
+    e.preventDefault();
+    openCardPaymentModal();
+  });
+  document.getElementById("openQuickSendNav")?.addEventListener("click", (e) => {
+    e.preventDefault();
+    openModal("transferModal");
+  });
+  document.getElementById("openRequestMoneyNav")?.addEventListener("click", (e) => {
+    e.preventDefault();
+    openModal("requestModal");
+  });
+  document.getElementById("navAddCardBtn")?.addEventListener("click", (e) => {
+    e.preventDefault();
+    openModal("addCardModal");
+  });
+  document.getElementById("navTopUpCardBtn")?.addEventListener("click", (e) => {
+    e.preventDefault();
+    openModal("topUpCardModal");
+  });
+
+  // Main Action Buttons
+  document.getElementById("openAddCardBtn")?.addEventListener("click", () => openModal("addCardModal"));
+  document.getElementById("openTopUpModalBtn")?.addEventListener("click", () => openModal("topUpCardModal"));
+  document.getElementById("openTransferModalBtn")?.addEventListener("click", () => openModal("transferModal"));
+  document.getElementById("openRequestModalBtn")?.addEventListener("click", () => openModal("requestModal"));
+  document.getElementById("openHistoryModalBtn")?.addEventListener("click", () => {
+    document.querySelector('.table-card')?.scrollIntoView({ behavior: 'smooth' });
+  });
+
+  // Filter Buttons
+  document.getElementById("openFilterBtn")?.addEventListener("click", () => openModal("filterModal"));
+  document.getElementById("applyFilterBtn")?.addEventListener("click", () => {
+    filterCriteria.status = document.getElementById("filterStatus").value;
+    filterCriteria.category = document.getElementById("filterCategory").value;
+    closeModal("filterModal");
+    renderTable();
+  });
+  document.getElementById("resetFilterBtn")?.addEventListener("click", () => {
+    document.getElementById("filterStatus").value = "ALL";
+    document.getElementById("filterCategory").value = "ALL";
+    filterCriteria.status = "ALL";
+    filterCriteria.category = "ALL";
+    closeModal("filterModal");
+    renderTable();
+  });
+
+  // Global Search
+  const globalSearch = document.getElementById("globalSearch");
+  globalSearch?.addEventListener("input", (e) => {
+    filterCriteria.query = e.target.value.toLowerCase().trim();
+    renderTable();
+  });
+
+  // Table Year Filter
+  document.getElementById("tableYearFilter")?.addEventListener("change", (e) => {
+    filterCriteria.year = e.target.value;
+    renderTable();
+  });
+
+  // Sortable Columns
+  document.querySelectorAll(".finsight-table th.sortable").forEach(th => {
+    th.addEventListener("click", () => {
+      const col = th.getAttribute("data-sort");
+      if (currentSort.col === col) {
+        currentSort.dir = currentSort.dir === 'asc' ? 'desc' : 'asc';
+      } else {
+        currentSort.col = col;
+        currentSort.dir = 'asc';
+      }
+      renderTable();
     });
   });
-}
 
-function renderTransactions() {
-  const listEl = document.getElementById('transactionList');
-  const emptyState = document.getElementById('emptyState');
-  const categoryFilter = document.getElementById('categoryFilterSelect').value;
-  const searchQuery = document.getElementById('globalSearchInput').value.toLowerCase().trim();
-
-  // Filter logic
-  let filtered = state.transactions.filter(tx => {
-    // Tab filter
-    if (activeTab === 'PENDING' && tx.status !== 'PENDING') return false;
-    if (activeTab === 'INCOMING' && tx.type !== 'INCOMING') return false;
-    if (activeTab === 'OUTGOING' && (tx.type !== 'OUTGOING' || tx.status === 'PENDING')) return false;
-
-    // Category filter
-    if (categoryFilter !== 'ALL' && tx.category !== categoryFilter) return false;
-
-    // Search query filter
-    if (searchQuery) {
-      const matchesTitle = tx.title.toLowerCase().includes(searchQuery);
-      const matchesRecipient = tx.recipient.toLowerCase().includes(searchQuery);
-      const matchesCat = tx.category.toLowerCase().includes(searchQuery);
-      const matchesId = tx.id.toLowerCase().includes(searchQuery);
-      return matchesTitle || matchesRecipient || matchesCat || matchesId;
-    }
-
-    return true;
-  });
-
-  // Calculate counts for tab badges
-  const countAll = state.transactions.length;
-  const countPending = state.transactions.filter(t => t.status === 'PENDING').length;
-  const countIncoming = state.transactions.filter(t => t.type === 'INCOMING').length;
-  const countOutgoing = state.transactions.filter(t => t.type === 'OUTGOING' && t.status !== 'PENDING').length;
-
-  document.getElementById('countAll').textContent = countAll;
-  document.getElementById('countPending').textContent = countPending;
-  document.getElementById('countIncoming').textContent = countIncoming;
-  document.getElementById('countOutgoing').textContent = countOutgoing;
-
-  if (filtered.length === 0) {
-    listEl.innerHTML = '';
-    emptyState.classList.remove('hidden');
-    return;
-  }
-
-  emptyState.classList.add('hidden');
-
-  listEl.innerHTML = filtered.map(tx => {
-    const isIncoming = tx.type === 'INCOMING';
-    const isPending = tx.status === 'PENDING';
-    const sign = isIncoming ? '+' : '-';
-    const amountColorClass = isIncoming ? 'green-text' : (isPending ? 'yellow-text' : 'f8fafc');
-
-    let badgeMarkup = '';
-    if (isPending) {
-      badgeMarkup = `<span class="tx-badge badge-pending">⚡ Pending Clearance</span>`;
-    } else if (isIncoming) {
-      badgeMarkup = `<span class="tx-badge badge-incoming">↙ Incoming</span>`;
-    } else {
-      badgeMarkup = `<span class="tx-badge badge-outgoing">↗ Outgoing</span>`;
-    }
-
-    return `
-      <div class="tx-item" data-tx-id="${tx.id}">
-        <div class="tx-left">
-          <div class="tx-icon-box ${isIncoming ? 'green-bg' : (isPending ? 'amber-bg' : 'indigo-bg')}">
-            ${tx.icon || '💸'}
-          </div>
-          <div class="tx-details">
-            <span class="tx-title">${escapeHTML(tx.title)}</span>
-            <span class="tx-meta">${escapeHTML(tx.category)} • ${tx.date}</span>
-          </div>
-        </div>
-        <div class="tx-right">
-          <span class="tx-amount ${amountColorClass}">${sign}$${formatCurrency(tx.amount)}</span>
-          ${badgeMarkup}
-        </div>
-      </div>
-    `;
-  }).join('');
-
-  // Add click handlers for transaction detail receipt
-  listEl.querySelectorAll('.tx-item').forEach(item => {
-    item.addEventListener('click', () => {
-      const txId = item.getAttribute('data-tx-id');
-      openTxDetailModal(txId);
+  // Modal Close Buttons
+  document.querySelectorAll(".modal-close-btn, .btn-secondary").forEach(btn => {
+    btn.addEventListener("click", (e) => {
+      const modal = e.target.closest(".modal-backdrop");
+      if (modal) modal.classList.add("hidden");
     });
   });
+
+  // Forms Submissions
+  setupFormHandlers();
+
+  // Window Resize re-render chart
+  window.addEventListener("resize", renderChart);
 }
 
-function renderAnalytics() {
-  const canvas = document.getElementById('cashflowCanvas');
+// --------------------------------------------------------------------------
+// Render Functions
+// --------------------------------------------------------------------------
+function renderAll() {
+  renderMetrics();
+  renderActiveCard();
+  renderChart();
+  renderTable();
+  renderDailyLimit();
+  renderActivities();
+}
+
+function renderMetrics() {
+  document.getElementById("incomeDisplay").textContent = `$${state.income.toLocaleString()}`;
+  document.getElementById("expenseDisplay").textContent = `$${state.expense.toLocaleString()}`;
+  document.getElementById("savingsDisplay").textContent = `$${state.savings.toLocaleString()}`;
+  document.getElementById("earningTotalDisplay").textContent = `$${state.earningTotal.toLocaleString()}`;
+}
+
+function renderActiveCard() {
+  if (!state.cards || state.cards.length === 0) return;
+  const activeCard = state.cards[state.activeCardIndex || 0];
+
+  document.getElementById("cardHolderDisplay").textContent = activeCard.holder;
+  document.getElementById("cardBalanceDisplay").textContent = `$${activeCard.balance.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+  document.getElementById("cardExpDisplay").textContent = activeCard.exp;
+  document.getElementById("cardCvvDisplay").textContent = activeCard.cvv;
+
+  const cardGraphic = document.getElementById("activeDebitCard");
+  if (cardGraphic) {
+    if (activeCard.theme === 'obsidian') {
+      cardGraphic.style.background = "linear-gradient(135deg, #1e293b 0%, #0f172a 100%)";
+      cardGraphic.style.color = "#ffffff";
+    } else if (activeCard.theme === 'royal') {
+      cardGraphic.style.background = "linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%)";
+      cardGraphic.style.color = "#ffffff";
+    } else if (activeCard.theme === 'gold') {
+      cardGraphic.style.background = "linear-gradient(135deg, #f59e0b 0%, #d97706 100%)";
+      cardGraphic.style.color = "#ffffff";
+    } else { // mint
+      cardGraphic.style.background = "linear-gradient(135deg, #a7f3d0 0%, #6ee7b7 50%, #34d399 100%)";
+      cardGraphic.style.color = "#064e3b";
+    }
+  }
+
+  // Render Carousel Dots
+  const dotsContainer = document.getElementById("cardCarouselDots");
+  if (dotsContainer) {
+    dotsContainer.innerHTML = state.cards.map((c, idx) => `
+      <span class="dot ${idx === (state.activeCardIndex || 0) ? 'active' : ''}" data-index="${idx}"></span>
+    `).join("");
+
+    dotsContainer.querySelectorAll(".dot").forEach(dot => {
+      dot.addEventListener("click", (e) => {
+        state.activeCardIndex = parseInt(e.target.getAttribute("data-index"));
+        saveState();
+        renderActiveCard();
+      });
+    });
+  }
+}
+
+// --------------------------------------------------------------------------
+// Duo-Tone Bar Chart Canvas Rendering
+// --------------------------------------------------------------------------
+function renderChart() {
+  const canvas = document.getElementById("earningChartCanvas");
   if (!canvas) return;
-  const ctx = canvas.getContext('2d');
-  
-  // Set resolution based on devicePixelRatio
+  const ctx = canvas.getContext("2d");
+
+  // Adjust canvas crisp resolution
   const dpr = window.devicePixelRatio || 1;
   const rect = canvas.getBoundingClientRect();
   canvas.width = rect.width * dpr;
-  canvas.height = 180 * dpr;
+  canvas.height = 240 * dpr;
   ctx.scale(dpr, dpr);
 
   const width = rect.width;
-  const height = 180;
+  const height = 240;
+  const paddingBottom = 30;
+  const paddingTop = 20;
+  const chartHeight = height - paddingBottom - paddingTop;
 
   ctx.clearRect(0, 0, width, height);
 
-  // Compute metrics for last 30d
-  const incomingSum = state.transactions
-    .filter(t => t.type === 'INCOMING' && t.status === 'COMPLETED')
-    .reduce((acc, curr) => acc + curr.amount, 0);
+  const data = state.monthlyData;
+  const maxVal = 7000;
+  const barWidth = Math.min(28, (width / data.length) * 0.45);
+  const gap = width / data.length;
 
-  const expensesSum = state.transactions
-    .filter(t => t.type === 'OUTGOING' && t.status === 'COMPLETED')
-    .reduce((acc, curr) => acc + curr.amount, 0);
+  data.forEach((item, i) => {
+    const x = i * gap + gap / 2;
 
-  const pendingSum = state.transactions
-    .filter(t => t.status === 'PENDING')
-    .reduce((acc, curr) => acc + curr.amount, 0);
+    // Y positions
+    const incomeH = (item.income / maxVal) * chartHeight;
+    const expenseH = (item.expense / maxVal) * chartHeight;
 
-  document.getElementById('totalIncomingMetric').textContent = `$${formatCurrency(incomingSum)}`;
-  document.getElementById('totalExpensesMetric').textContent = `$${formatCurrency(expensesSum)}`;
-  document.getElementById('pendingLiquidityMetric').textContent = `$${formatCurrency(pendingSum)}`;
+    const incomeY = height - paddingBottom - incomeH;
+    const expenseY = height - paddingBottom - expenseH;
 
-  // Draw smooth trend chart
-  const incomePoints = [1200, 1800, 1500, 2900, 3200, 4850];
-  const expensePoints = [800, 1100, 950, 1400, 1250, 1600];
-
-  const step = width / (incomePoints.length - 1);
-  const maxVal = 5500;
-
-  // Grid Lines
-  ctx.strokeStyle = '#1e293b';
-  ctx.lineWidth = 1;
-  for (let i = 1; i <= 3; i++) {
-    const y = (height / 4) * i;
+    // Draw Expense Bar (Light Grey background bar)
+    ctx.fillStyle = "#E2E8F0";
     ctx.beginPath();
-    ctx.moveTo(0, y);
-    ctx.lineTo(width, y);
-    ctx.stroke();
+    ctx.roundRect(x - barWidth / 2, expenseY, barWidth, expenseH, [6, 6, 6, 6]);
+    ctx.fill();
+
+    // Draw Income Bar (Vibrant Mint Green)
+    ctx.fillStyle = "#34C759";
+    ctx.beginPath();
+    ctx.roundRect(x - barWidth / 2, incomeY, barWidth, incomeH, [6, 6, 6, 6]);
+    ctx.fill();
+
+    // Month Label
+    ctx.fillStyle = (i === 3) ? "#0F172A" : "#94A3B8"; // April highlighted
+    ctx.font = (i === 3) ? "bold 12px 'Plus Jakarta Sans'" : "12px 'Plus Jakarta Sans'";
+    ctx.textAlign = "center";
+    ctx.fillText(item.month, x, height - 8);
+  });
+
+  // Canvas Hover Tooltip Interaction
+  canvas.onmousemove = (e) => {
+    const r = canvas.getBoundingClientRect();
+    const mouseX = e.clientX - r.left;
+    const index = Math.floor(mouseX / gap);
+
+    const tooltip = document.getElementById("chartTooltip");
+    if (index >= 0 && index < data.length) {
+      const item = data[index];
+      document.getElementById("ttMonth").textContent = `${item.month} 2029`;
+      document.getElementById("ttIncome").textContent = `$${item.income.toLocaleString()}`;
+      document.getElementById("ttExpense").textContent = `$${item.expense.toLocaleString()}`;
+
+      tooltip.classList.remove("hidden");
+      tooltip.style.left = `${(index * gap + gap / 2)}px`;
+      tooltip.style.top = `${height - paddingBottom - Math.max(item.income, item.expense) * (chartHeight / maxVal) - 10}px`;
+    }
+  };
+
+  canvas.onmouseleave = () => {
+    document.getElementById("chartTooltip")?.classList.add("hidden");
+  };
+}
+
+// --------------------------------------------------------------------------
+// Transaction Table Rendering & Sorting
+// --------------------------------------------------------------------------
+function renderTable() {
+  const tbody = document.getElementById("transactionTableBody");
+  const emptyState = document.getElementById("tableEmptyState");
+  if (!tbody) return;
+
+  let list = [...state.transactions];
+
+  // Filtering
+  if (filterCriteria.query) {
+    list = list.filter(t => 
+      t.name.toLowerCase().includes(filterCriteria.query) ||
+      t.note.toLowerCase().includes(filterCriteria.query) ||
+      t.category.toLowerCase().includes(filterCriteria.query)
+    );
+  }
+  if (filterCriteria.status !== 'ALL') {
+    list = list.filter(t => t.status === filterCriteria.status);
+  }
+  if (filterCriteria.category !== 'ALL') {
+    list = list.filter(t => t.category === filterCriteria.category);
+  }
+  if (filterCriteria.year !== 'ALL') {
+    list = list.filter(t => t.year === filterCriteria.year);
   }
 
-  // Income Line (Green Gradient fill)
-  drawCurve(ctx, incomePoints, step, height, maxVal, '#10b981', 'rgba(16, 185, 129, 0.15)');
+  // Sorting
+  list.sort((a, b) => {
+    let valA = a[currentSort.col];
+    let valB = b[currentSort.col];
+    if (typeof valA === 'string') valA = valA.toLowerCase();
+    if (typeof valB === 'string') valB = valB.toLowerCase();
 
-  // Expense Line (Indigo Line)
-  drawCurve(ctx, expensePoints, step, height, maxVal, '#818cf8', 'rgba(99, 102, 241, 0.08)');
-}
+    if (valA < valB) return currentSort.dir === 'asc' ? -1 : 1;
+    if (valA > valB) return currentSort.dir === 'asc' ? 1 : -1;
+    return 0;
+  });
 
-function drawCurve(ctx, points, step, height, maxVal, strokeColor, fillColor) {
-  ctx.beginPath();
-  const getX = i => i * step;
-  const getY = val => height - (val / maxVal) * (height - 30) - 15;
-
-  ctx.moveTo(getX(0), getY(points[0]));
-  for (let i = 0; i < points.length - 1; i++) {
-    const xc = (getX(i) + getX(i + 1)) / 2;
-    const yc = (getY(points[i]) + getY(points[i + 1])) / 2;
-    ctx.quadraticCurveTo(getX(i), getY(points[i]), xc, yc);
+  if (list.length === 0) {
+    tbody.innerHTML = "";
+    emptyState?.classList.remove("hidden");
+    return;
   }
-  ctx.lineTo(getX(points.length - 1), getY(points[points.length - 1]));
+  emptyState?.classList.add("hidden");
 
-  ctx.strokeStyle = strokeColor;
-  ctx.lineWidth = 3;
-  ctx.stroke();
+  tbody.innerHTML = list.map(tx => {
+    const pillClass = tx.status === 'Completed' ? 'pill-completed' : (tx.status === 'Failed' ? 'pill-failed' : 'pill-pending');
+    return `
+      <tr data-id="${tx.id}">
+        <td>
+          <div class="tx-name-cell">
+            <span class="tx-title-bold">${escapeHtml(tx.name)}</span>
+            <span class="tx-cat-sub">${escapeHtml(tx.sub || tx.category)}</span>
+          </div>
+        </td>
+        <td>${escapeHtml(tx.date)}</td>
+        <td style="font-weight:700;">$${tx.amount.toFixed(2)}</td>
+        <td style="color:#64748B;">${escapeHtml(tx.note)}</td>
+        <td><span class="tx-status-pill ${pillClass}">${tx.status}</span></td>
+      </tr>
+    `;
+  }).join("");
 
-  // Fill gradient
-  ctx.lineTo(getX(points.length - 1), height);
-  ctx.lineTo(0, height);
-  ctx.closePath();
-  ctx.fillStyle = fillColor;
-  ctx.fill();
+  // Add click to view receipt
+  tbody.querySelectorAll("tr").forEach(tr => {
+    tr.addEventListener("click", () => {
+      const id = tr.getAttribute("data-id");
+      const tx = state.transactions.find(t => t.id === id);
+      if (tx) showReceiptModal(tx);
+    });
+  });
 }
 
-// Modal Handlers
-function openModal(modalId) {
-  document.getElementById(modalId).classList.remove('hidden');
+function renderDailyLimit() {
+  const pct = Math.min(100, Math.round((state.dailySpent / state.dailyLimit) * 100));
+  document.getElementById("dailyLimitText").innerHTML = `<strong>$${state.dailySpent.toLocaleString('en-US', { minimumFractionDigits: 2 })}</strong> spent of $${state.dailyLimit.toLocaleString('en-US', { minimumFractionDigits: 2 })}`;
+  document.getElementById("dailyLimitBar").style.width = `${pct}%`;
+  document.getElementById("dailyLimitPct").textContent = `${pct}%`;
 }
 
-function closeModal(modalId) {
-  document.getElementById(modalId).classList.add('hidden');
-}
-
-function openTxDetailModal(txId) {
-  const tx = state.transactions.find(t => t.id === txId);
-  if (!tx) return;
-
-  const detailBody = document.getElementById('txDetailBody');
-  const isPending = tx.status === 'PENDING';
-  const isIncoming = tx.type === 'INCOMING';
-
-  detailBody.innerHTML = `
-    <div class="receipt-box">
-      <div class="receipt-row">
-        <span class="receipt-key">Transaction ID</span>
-        <span class="receipt-val">${tx.id}</span>
+function renderActivities() {
+  const container = document.getElementById("activityList");
+  if (!container) return;
+  container.innerHTML = state.activities.map(act => `
+    <div class="activity-item">
+      <img src="${act.avatar}" alt="${escapeHtml(act.name)}" class="act-avatar">
+      <div class="act-content">
+        <p class="act-text"><strong>${escapeHtml(act.name)}</strong> ${escapeHtml(act.text)}</p>
+        <span class="act-time">${escapeHtml(act.time)}</span>
       </div>
-      <div class="receipt-row">
-        <span class="receipt-key">Title / Description</span>
-        <span class="receipt-val">${escapeHTML(tx.title)}</span>
-      </div>
-      <div class="receipt-row">
-        <span class="receipt-key">Recipient / Sender</span>
-        <span class="receipt-val">${escapeHTML(tx.recipient || 'N/A')}</span>
-      </div>
-      <div class="receipt-row">
-        <span class="receipt-key">Category</span>
-        <span class="receipt-val">${escapeHTML(tx.category)}</span>
-      </div>
-      <div class="receipt-row">
-        <span class="receipt-key">Timestamp</span>
-        <span class="receipt-val">${tx.date}</span>
-      </div>
-      <div class="receipt-row">
-        <span class="receipt-key">Funding Account</span>
-        <span class="receipt-val">${tx.account.toUpperCase()}</span>
-      </div>
-      <div class="receipt-divider"></div>
-      <div class="receipt-row">
-        <span class="receipt-key">Amount</span>
-        <span class="receipt-val ${isIncoming ? 'green-text' : (isPending ? 'yellow-text' : '')}" style="font-size: 18px;">
-          ${isIncoming ? '+' : '-'}$${formatCurrency(tx.amount)}
-        </span>
-      </div>
-      <div class="receipt-row">
-        <span class="receipt-key">Status</span>
-        <span class="tx-badge ${isPending ? 'badge-pending' : (isIncoming ? 'badge-incoming' : 'badge-outgoing')}">
-          ${tx.status}
-        </span>
-      </div>
-      ${tx.note ? `<div class="receipt-row"><span class="receipt-key">Note</span><span class="receipt-val">${escapeHTML(tx.note)}</span></div>` : ''}
-
-      ${isPending ? `
-        <button class="receipt-cancel-pending-btn" id="cancelPendingTxBtn" data-tx-id="${tx.id}">
-          Cancel Pending Transaction & Refund
-        </button>
-      ` : ''}
     </div>
-  `;
+  `).join("");
+}
 
-  openModal('txDetailModal');
-
-  const cancelBtn = document.getElementById('cancelPendingTxBtn');
-  if (cancelBtn) {
-    cancelBtn.addEventListener('click', () => {
-      cancelPendingTransaction(tx.id);
-      closeModal('txDetailModal');
-    });
+// --------------------------------------------------------------------------
+// Card Payment Checkout & Form Handlers
+// --------------------------------------------------------------------------
+function openCardPaymentModal() {
+  const select = document.getElementById("payCardSelect");
+  if (select) {
+    select.innerHTML = state.cards.map((c, idx) => `
+      <option value="${idx}">
+        ${c.holder} (${c.number.slice(-4)}) - Balance: $${c.balance.toLocaleString()}
+      </option>
+    `).join("");
   }
+  openModal("cardPaymentModal");
 }
 
-function cancelPendingTransaction(txId) {
-  const index = state.transactions.findIndex(t => t.id === txId);
-  if (index !== -1) {
-    const tx = state.transactions[index];
-    // Refund balance if it was outgoing pending
-    if (tx.type === 'OUTGOING') {
-      state.balances[tx.account] += tx.amount;
-    }
-    state.transactions.splice(index, 1);
-    saveState();
-    updateUI();
-    showToast(`Pending transaction ${txId} cancelled & funds returned`, 'warning');
-  }
-}
-
-// Toast Notifications
-function showToast(msg, type = 'info') {
-  const container = document.getElementById('toastContainer');
-  const toast = document.createElement('div');
-  toast.className = `toast-message ${type}`;
-  toast.innerHTML = `
-    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-      <circle cx="12" cy="12" r="10"></circle>
-      <line x1="12" y1="16" x2="12" y2="12"></line>
-      <line x1="12" y1="8" x2="12.01" y2="8"></line>
-    </svg>
-    <span>${escapeHTML(msg)}</span>
-  `;
-  container.appendChild(toast);
-
-  setTimeout(() => {
-    toast.style.opacity = '0';
-    toast.style.transition = 'opacity 0.3s ease';
-    setTimeout(() => toast.remove(), 300);
-  }, 3500);
-}
-
-// Utility HTML escape
-function escapeHTML(str) {
-  if (!str) return '';
-  return str.replace(/[&<>'"]/g, 
-    tag => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[tag] || tag)
-  );
-}
-
-// Dynamic UI Refresh
-function updateUI() {
-  renderBalances();
-  renderCard();
-  renderContacts();
-  renderTransactions();
-  renderAnalytics();
-}
-
-// Setup Event Listeners
-function initEventListeners() {
-  // Balance Visibility Toggle
-  document.getElementById('toggleBalanceBtn').addEventListener('click', () => {
-    state.hideBalance = !state.hideBalance;
-    saveState();
-    renderBalances();
-    showToast(state.hideBalance ? 'Privacy mode enabled' : 'Balances visible', 'info');
-  });
-
-  // Card Controls
-  document.getElementById('revealCardNumBtn').addEventListener('click', () => {
-    state.card.isNumRevealed = !state.card.isNumRevealed;
-    saveState();
-    renderCard();
-  });
-
-  document.getElementById('toggleFreezeBtn').addEventListener('click', () => {
-    if (state.card.isFrozen) {
-      state.card.isFrozen = false;
-      showToast('Virtual card unfrozen and ready to use', 'success');
-    } else {
-      state.card.isFrozen = true;
-      showToast('Virtual card frozen successfully', 'warning');
-    }
-    saveState();
-    renderCard();
-  });
-
-  document.getElementById('copyCardNumBtn').addEventListener('click', () => {
-    navigator.clipboard.writeText(state.card.number.replace(/\s+/g, ''));
-    showToast('Card number copied to clipboard', 'success');
-  });
-
-  document.getElementById('cardLimitBtn').addEventListener('click', () => {
-    showToast('Monthly card spending limit: $10,000.00 ($7,450 remaining)', 'info');
-  });
-
-  // Filter Tabs
-  document.querySelectorAll('.tab-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      activeTab = btn.getAttribute('data-tab');
-      renderTransactions();
-    });
-  });
-
-  // Category & Search Filters
-  document.getElementById('categoryFilterSelect').addEventListener('change', renderTransactions);
-  document.getElementById('globalSearchInput').addEventListener('input', renderTransactions);
-
-  // Period Toggle for Analytics
-  document.querySelectorAll('.period-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-      document.querySelectorAll('.period-btn').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      activePeriod = btn.getAttribute('data-period');
-      renderAnalytics();
-    });
-  });
-
-  // Modals Open Triggers
-  document.getElementById('openSendModalBtn').addEventListener('click', () => openModal('sendMoneyModal'));
-  document.getElementById('openDepositModalBtn').addEventListener('click', () => openModal('depositModal'));
-  document.getElementById('openRequestModalBtn').addEventListener('click', () => openModal('requestModal'));
-  document.getElementById('openBillsModalBtn').addEventListener('click', () => openModal('billsModal'));
-
-  // Modals Close Triggers
-  document.getElementById('closeSendModalBtn').addEventListener('click', () => closeModal('sendMoneyModal'));
-  document.getElementById('cancelSendBtn').addEventListener('click', () => closeModal('sendMoneyModal'));
-
-  document.getElementById('closeDepositModalBtn').addEventListener('click', () => closeModal('depositModal'));
-  document.getElementById('cancelDepositBtn').addEventListener('click', () => closeModal('depositModal'));
-
-  document.getElementById('closeRequestModalBtn').addEventListener('click', () => closeModal('requestModal'));
-  document.getElementById('cancelRequestBtn').addEventListener('click', () => closeModal('requestModal'));
-
-  document.getElementById('closeBillsModalBtn').addEventListener('click', () => closeModal('billsModal'));
-  document.getElementById('closeTxDetailBtn').addEventListener('click', () => closeModal('txDetailModal'));
-
-  // Form Submissions
-  // 1. Send Money
-  document.getElementById('sendMoneyForm').addEventListener('submit', (e) => {
+function setupFormHandlers() {
+  // Card Payment Form -> OTP Verification
+  const cardPayForm = document.getElementById("cardPaymentForm");
+  cardPayForm?.addEventListener("submit", (e) => {
     e.preventDefault();
+    const cardIdx = parseInt(document.getElementById("payCardSelect").value);
+    const recipient = document.getElementById("payRecipient").value.trim();
+    const amount = parseFloat(document.getElementById("payAmount").value);
+    const category = document.getElementById("payCategory").value;
+    const note = document.getElementById("payNote").value.trim() || "Card payment settlement";
 
-    if (state.card.isFrozen) {
-      showToast('Cannot process transfer while virtual card/account is frozen!', 'warning');
+    const card = state.cards[cardIdx];
+    if (!card) return;
+
+    if (amount > card.balance) {
+      showToast("❌ Card payment failed: Insufficient balance on card.", "error");
       return;
     }
 
-    const fromAccount = document.getElementById('sendFromAccount').value;
-    const recipient = document.getElementById('recipientInput').value.trim();
-    const amount = parseFloat(document.getElementById('sendAmount').value);
-    const category = document.getElementById('sendCategory').value;
-    const execType = document.getElementById('sendExecutionType').value;
-    const note = document.getElementById('sendNote').value.trim();
-
-    if (isNaN(amount) || amount <= 0) {
-      showToast('Please enter a valid transfer amount', 'warning');
-      return;
-    }
-
-    if (state.balances[fromAccount] < amount) {
-      showToast(`Insufficient funds in ${fromAccount} account!`, 'warning');
-      return;
-    }
-
-    // Deduct balance
-    state.balances[fromAccount] -= amount;
-
-    const newTx = {
-      id: `TX-${Math.floor(1000 + Math.random() * 9000)}`,
-      title: `Transfer to ${recipient}`,
-      amount: amount,
-      type: "OUTGOING",
-      status: execType,
-      category: category,
-      account: fromAccount,
-      date: new Date().toISOString().replace('T', ' ').slice(0, 16),
-      icon: "↗",
-      recipient: recipient,
-      note: note || "P2P Transfer"
-    };
-
-    state.transactions.unshift(newTx);
-    saveState();
-    updateUI();
-    closeModal('sendMoneyModal');
-    document.getElementById('sendMoneyForm').reset();
-    showToast(`Successfully transferred $${formatCurrency(amount)} to ${recipient}`, 'success');
+    pendingCardPayment = { cardIdx, recipient, amount, category, note };
+    closeModal("cardPaymentModal");
+    openModal("otpModal");
   });
 
-  // 2. Deposit Funds
-  document.getElementById('depositForm').addEventListener('submit', (e) => {
-    e.preventDefault();
+  // OTP Confirmation
+  document.getElementById("confirmOtpBtn")?.addEventListener("click", () => {
+    if (!pendingCardPayment) return;
 
-    const targetAcc = document.getElementById('depositTargetAccount').value;
-    const source = document.getElementById('depositSource').value;
-    const amount = parseFloat(document.getElementById('depositAmount').value);
-    const statusType = document.getElementById('depositStatusType').value;
+    closeModal("otpModal");
+    showToast("⚡ Processing card payment with bank clearance...", "info");
 
-    if (isNaN(amount) || amount <= 0) {
-      showToast('Please enter a valid deposit amount', 'warning');
-      return;
-    }
+    setTimeout(() => {
+      const { cardIdx, recipient, amount, category, note } = pendingCardPayment;
+      const card = state.cards[cardIdx];
 
-    if (statusType === 'INCOMING') {
-      state.balances[targetAcc] += amount;
-    }
+      // Deduct balance
+      card.balance -= amount;
+      state.dailySpent += amount;
+      state.expense += amount;
+      state.earningTotal += amount * 0.1;
 
-    const newTx = {
-      id: `TX-${Math.floor(1000 + Math.random() * 9000)}`,
-      title: `Deposit from ${source}`,
-      amount: amount,
-      type: "INCOMING",
-      status: statusType === 'INCOMING' ? 'COMPLETED' : 'PENDING',
-      category: "Income",
-      account: targetAcc,
-      date: new Date().toISOString().replace('T', ' ').slice(0, 16),
-      icon: "📥",
-      recipient: "Self Deposit",
-      note: `Fund transfer via ${source}`
-    };
-
-    state.transactions.unshift(newTx);
-    saveState();
-    updateUI();
-    closeModal('depositModal');
-    document.getElementById('depositForm').reset();
-    showToast(`Deposit of $${formatCurrency(amount)} processed`, 'success');
-  });
-
-  // 3. Request Money Form
-  document.getElementById('requestForm').addEventListener('submit', (e) => {
-    e.preventDefault();
-
-    const payer = document.getElementById('requestPayer').value.trim();
-    const amount = parseFloat(document.getElementById('requestAmount').value);
-    const reason = document.getElementById('requestReason').value.trim();
-
-    if (isNaN(amount) || amount <= 0) {
-      showToast('Please enter a valid requested amount', 'warning');
-      return;
-    }
-
-    showToast(`Payment request invoice for $${formatCurrency(amount)} sent to ${payer}`, 'success');
-    closeModal('requestModal');
-    document.getElementById('requestForm').reset();
-  });
-
-  // 4. Pay Bills One-Click Buttons
-  document.querySelectorAll('.bill-pay-now-btn').forEach(btn => {
-    btn.addEventListener('click', (e) => {
-      const card = e.target.closest('.bill-card-item');
-      const biller = card.getAttribute('data-biller');
-      const amount = parseFloat(card.getAttribute('data-amount'));
-
-      if (state.balances.checking < amount) {
-        showToast('Insufficient funds in Checking account to pay bill!', 'warning');
-        return;
-      }
-
-      state.balances.checking -= amount;
-
+      // Log transaction
       const newTx = {
         id: `TX-${Math.floor(1000 + Math.random() * 9000)}`,
-        title: `${biller} Bill`,
+        name: recipient,
+        sub: category,
+        date: new Date().toISOString().replace('T', ' ').substring(0, 19),
         amount: amount,
-        type: "OUTGOING",
-        status: "COMPLETED",
-        category: "Bills",
-        account: "checking",
-        date: new Date().toISOString().replace('T', ' ').slice(0, 16),
-        icon: "🧾",
-        recipient: biller,
-        note: "One-click utility payment"
+        note: note,
+        status: "Completed",
+        category: category,
+        year: "2026"
       };
 
       state.transactions.unshift(newTx);
+      state.activities.unshift({
+        id: `act-${Date.now()}`,
+        name: "Fokhrul Islam",
+        text: `completed card payment of $${amount.toFixed(2)} to ${recipient}`,
+        time: "Just now",
+        avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=120&q=80"
+      });
+
       saveState();
-      updateUI();
-      closeModal('billsModal');
-      showToast(`Paid $${formatCurrency(amount)} bill to ${biller}`, 'success');
-    });
+      renderAll();
+      showToast(`✅ Payment of $${amount.toFixed(2)} to ${recipient} completed successfully!`);
+      showReceiptModal(newTx);
+      pendingCardPayment = null;
+    }, 1200);
   });
 
-  // Reset Demo State Button
-  document.getElementById('resetDataBtn').addEventListener('click', () => {
-    if (confirm("Reset dashboard to default demo data? All custom transactions will be refreshed.")) {
-      state = getInitialState();
+  // Add Card Form
+  document.getElementById("addCardForm")?.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const holder = document.getElementById("newCardHolder").value.trim();
+    const number = document.getElementById("newCardNumber").value.trim();
+    const exp = document.getElementById("newCardExp").value.trim();
+    const cvv = document.getElementById("newCardCvv").value.trim();
+    const balance = parseFloat(document.getElementById("newCardBalance").value) || 1000;
+    const theme = document.getElementById("newCardTheme").value;
+
+    state.cards.push({
+      id: `card-${Date.now()}`,
+      holder, number, exp, cvv, balance, theme
+    });
+    state.activeCardIndex = state.cards.length - 1;
+
+    saveState();
+    renderAll();
+    closeModal("addCardModal");
+    showToast(`💳 New ${theme.toUpperCase()} payment card added successfully!`);
+  });
+
+  // Top Up Form
+  document.getElementById("topUpForm")?.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const amount = parseFloat(document.getElementById("topUpAmount").value);
+    const card = state.cards[state.activeCardIndex || 0];
+
+    if (card && amount > 0) {
+      card.balance += amount;
+      state.income += amount;
       saveState();
-      updateUI();
-      showToast('Dashboard reset to default demo data', 'info');
+      renderAll();
+      closeModal("topUpCardModal");
+      showToast(`💰 Added $${amount.toFixed(2)} to ${card.holder}'s card!`);
     }
   });
 
-  // Notifications icon toast trigger
-  document.getElementById('notificationsBtn').addEventListener('click', () => {
-    showToast('You have 3 unread alerts: 2 Pending clearances & 1 Deposit received', 'info');
+  // Direct Transfer Form
+  document.getElementById("transferForm")?.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const recipient = document.getElementById("transferRecipient").value.trim();
+    const amount = parseFloat(document.getElementById("transferAmount").value);
+    const note = document.getElementById("transferNote").value.trim() || "P2P Transfer";
+
+    const card = state.cards[state.activeCardIndex || 0];
+    if (card && amount <= card.balance) {
+      card.balance -= amount;
+      state.transactions.unshift({
+        id: `TX-${Math.floor(1000 + Math.random() * 9000)}`,
+        name: recipient,
+        sub: "Transfers",
+        date: new Date().toISOString().replace('T', ' ').substring(0, 19),
+        amount: amount,
+        note: note,
+        status: "Completed",
+        category: "Transfers",
+        year: "2026"
+      });
+      saveState();
+      renderAll();
+      closeModal("transferModal");
+      showToast(`↗ Transferred $${amount.toFixed(2)} to ${recipient}!`);
+    } else {
+      showToast("❌ Transfer failed: Insufficient funds.", "error");
+    }
   });
 
-  // Window Resize chart redraw
-  window.addEventListener('resize', renderAnalytics);
+  // Request Money Form
+  document.getElementById("requestForm")?.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const payer = document.getElementById("reqPayer").value.trim();
+    const amount = parseFloat(document.getElementById("reqAmount").value);
+
+    showToast(`📩 Payment request for $${amount.toFixed(2)} sent to ${payer}!`);
+    closeModal("requestModal");
+  });
 }
 
-// Application Entry Point
-document.addEventListener('DOMContentLoaded', () => {
-  initEventListeners();
-  updateUI();
-});
+// --------------------------------------------------------------------------
+// Receipt Modal & Helper Utilities
+// --------------------------------------------------------------------------
+function showReceiptModal(tx) {
+  const content = document.getElementById("receiptModalContent");
+  if (!content) return;
+
+  content.innerHTML = `
+    <div style="text-align:center; padding:10px 0; border-bottom:1px dashed #E2E8F0; margin-bottom:16px;">
+      <div style="font-size:24px; font-weight:800; color:#0F172A;">FinSight</div>
+      <div style="font-size:12px; color:#64748B;">Official Payment Receipt</div>
+    </div>
+    <div style="display:flex; flex-direction:column; gap:10px; font-size:13px;">
+      <div style="display:flex; justify-content:space-between;"><span>Transaction ID:</span> <strong>${tx.id}</strong></div>
+      <div style="display:flex; justify-content:space-between;"><span>Recipient / Name:</span> <strong>${escapeHtml(tx.name)}</strong></div>
+      <div style="display:flex; justify-content:space-between;"><span>Date & Time:</span> <span>${tx.date}</span></div>
+      <div style="display:flex; justify-content:space-between;"><span>Category:</span> <span>${tx.category}</span></div>
+      <div style="display:flex; justify-content:space-between;"><span>Status:</span> <span class="tx-status-pill ${tx.status === 'Completed' ? 'pill-completed' : (tx.status === 'Failed' ? 'pill-failed' : 'pill-pending')}">${tx.status}</span></div>
+      <div style="display:flex; justify-content:space-between; font-size:16px; margin-top:10px; padding-top:10px; border-top:1px solid #EAEFEA;"><span>Total Amount:</span> <strong style="color:#22C55E;">$${tx.amount.toFixed(2)}</strong></div>
+    </div>
+  `;
+
+  openModal("receiptModal");
+
+  const printBtn = document.getElementById("printReceiptBtn");
+  if (printBtn) printBtn.onclick = () => window.print();
+  const closeBtn = document.getElementById("closeReceiptBtn");
+  if (closeBtn) closeBtn.onclick = () => closeModal("receiptModal");
+}
+
+function openModal(id) {
+  document.getElementById(id)?.classList.remove("hidden");
+}
+
+function closeModal(id) {
+  document.getElementById(id)?.classList.add("hidden");
+}
+
+function showToast(msg, type = "success") {
+  const container = document.getElementById("toastContainer");
+  if (!container) return;
+
+  const toast = document.createElement("div");
+  toast.className = "toast";
+  if (type === "error") toast.style.backgroundColor = "#991B1B";
+  toast.textContent = msg;
+
+  container.appendChild(toast);
+  setTimeout(() => {
+    toast.remove();
+  }, 3500);
+}
+
+function escapeHtml(str) {
+  return String(str || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+}

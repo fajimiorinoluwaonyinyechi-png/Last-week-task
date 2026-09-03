@@ -1,58 +1,63 @@
-# Velo Vault — Modern Fintech Dashboard
+# FinSight — Advanced Fintech Dashboard & Card Payment Platform
 
-Velo Vault is a high-performance, responsive, modern fintech web application built to enable users to view real-time account balances, track pending and incoming transactions, execute money transfers and deposits, manage virtual credit card security, and inspect financial analytics.
+**FinSight** is a modern, high-performance fintech web application built with a light mint green UI identity inspired by state-of-the-art financial management tools. It provides users with a comprehensive dashboard to monitor income, expenses, and savings, inspect cash flow bar charts, manage transaction history, issue virtual debit/credit cards, and process card payments with simulated 3D Secure verification.
 
 ---
 
 ## 🎯 Target Audience
 
-Velo Vault is designed for everyday banking users, freelancers, and digital nomads who need a unified, zero-friction dashboard to:
-- Monitor multi-account liquidity (Checking, Savings, Investments).
-- Inspect pending transaction clearance holds and incoming direct deposits.
-- Transfer money to contacts or IBANs instantly.
-- Control virtual debit/credit card security (card freezing and credentials masking).
+FinSight is designed for everyday banking users, freelancers, financial managers, and digital nomads who need a unified dashboard to:
+- Track financial health across **Total Income** ($78,000), **Total Expense** ($43,000), **Total Savings** ($56,000), and **Annual Earning** ($678,897).
+- Execute online card payments for bills, merchants, and P2P transfers with 3D Secure authorization.
+- Issue and manage virtual credit/debit cards with custom design themes.
+- Monitor daily spending limits and recent team/account activities.
 
 ---
 
-## 💡 The Problem It Solves
+## 💡 Key Solutions Provided
 
-Traditional banking interfaces often obscure pending clearance transactions, present cluttered transaction feeds, or require complex backend server setups to test offline workflows. **Velo Vault** solves these challenges by:
-1. **Clear Transaction Status Visibility**: Categorizes every transaction with explicit status badges (`⚡ Pending Clearance`, `↙ Incoming`, `↗ Outgoing`).
-2. **Instant Multi-Filter Navigation**: Allows users to slice transaction history by status tabs (`All`, `Pending`, `Incoming`, `Outgoing`), categories, or real-time search queries.
-3. **Zero-Dependency Web Persistence**: Guarantees complete client-side data persistence across browser reloads using the HTML5 `localStorage` Web Storage API.
-4. **Proactive Security Controls**: Enables one-click freezing and unfreezing of virtual card credentials.
-
----
-
-## 🛠️ Technologies & Tools Used
-
-- **HTML5**: Semantic document layout, modal dialog containers, accessible form elements, and SVG icon vectors.
-- **Vanilla CSS3**: Responsive grid and flexbox layouts, glassmorphism background filters, micro-animations, modal transitions, and custom dark mode styling.
-  - *Strict Constraint*: **Zero CSS variables** (`--...` or `var()`) and **Zero Tailwind CSS** frameworks.
-- **Vanilla JavaScript (ES6+)**: State management, DOM manipulation, functional filtering pipelines, HTML5 Canvas chart renderer, and toast notifications.
-- **Web Storage API (`localStorage`)**: Persists account balances, transaction history, virtual card states, and user preferences locally.
-- **Git**: Version control repository.
-
----
-
-## ⚙️ Important Decisions Made
-
-1. **Strict Direct-Color CSS Styling**:
-   - Rather than relying on CSS custom properties (`var(--name)`), all design tokens (HEX `#0b0f19`, `#141c2e`, `#6366f1`, `#10b981`, RGBA, HSL) were applied directly to guarantee compatibility with strict non-variable CSS specifications.
-2. **Self-Healing Persistent State**:
-   - Designed a robust `loadState()` and `saveState()` workflow. If `localStorage` is empty, it automatically populates realistic initial seed data containing pending transfers, incoming salary deposits, and completed purchases.
-3. **High-DPI HTML5 Canvas Chart Engine**:
-   - Built a lightweight, zero-dependency custom canvas renderer for 30-day income vs. expense analytics with resolution scaling using `window.devicePixelRatio`.
-4. **Interactive Pending Clearance Management**:
-   - Provided a receipt modal for every transaction, complete with a **Cancel Pending Transaction & Refund** capability that returns held funds back to the user's account.
+1. **FinSight Visual Design System**:
+   - **Sidebar Navigation**: Quick navigation across `Dashboard` (active), `Payments`, `Transactions`, `Invoices`, `Cards`, `Saving Plans`, `Investments`, `Inbox` (badge "21"), `Insights`, and `Settings`.
+   - **Go Pro! Banner**: Upgrade promo widget with lock icon and upgrade action.
+   - **Header Bar**: Rounded pill search bar (`🔍 Search`), notification icons, and user profile widget (**Fokhrul Islam**, **Finance**).
+2. **Card Payment & 3D Secure Verification**:
+   - Dedicated **Make Card Payment** modal with card selection, recipient entry, category assignment, 16-digit card formatting, EXP, CVV, and reference note.
+   - Simulated 3D Secure OTP verification modal (demo code: `1 2 3 4`).
+   - Automated balance deduction, transaction logging, daily limit recalculation, and printable digital receipts.
+3. **Card Management & Multi-Card Swiper**:
+   - Interactive mint green debit card graphic (`Fokhrul Islam`, balance `$68,000`, EXP `12/26`, CVV `335`).
+   - `+ Add Card` modal to issue new cards with custom themes (Mint Emerald, Obsidian Black, Royal Blue, Rose Gold).
+   - Quick action buttons: **Top Up**, **Transfer**, **Request**, **History**.
+4. **Duo-Tone Bar Chart Analytics**:
+   - High-DPI HTML5 Canvas bar chart displaying monthly Income (mint green `#34C759`) vs Expense (light grey) from Jan to Dec.
+   - Interactive hover tooltips displaying detailed monthly stats (*e.g., June 2029: Income $4,000, Expense $6,000*).
+5. **Dynamic Transaction History Table**:
+   - Columns: `Transaction Name`, `Date & Time`, `Amount`, `Note`, `Status`.
+   - Status pills (`Completed` green, `Failed` red/pink, `Pending` yellow/amber).
+   - Real-time global text search, year filter (`This Year`, `2025`, `2026`), category filters, and column header sorting.
 
 ---
 
-## 🚧 Challenges Encountered & Solutions
+## 🛠️ Technologies Used
 
-1. **Challenge**: Maintaining responsive, crisp canvas rendering without blurry graph line artifacts on Retina/High-DPI displays.
-   - **Solution**: Implemented dynamic scaling based on `window.devicePixelRatio` before drawing bezier curves for income and expense lines.
-2. **Challenge**: Efficiently filtering transactions across multiple concurrent criteria (Search query string + Category dropdown + Active status tab).
-   - **Solution**: Built a single functional array pipeline in `renderTransactions()` that evaluates all filter predicates deterministically before updating UI badge counts and DOM nodes.
-3. **Challenge**: Ensuring 100% compliance with the "no CSS variables" rule while retaining a polished glassmorphic dark theme.
-   - **Solution**: Utilized explicit HEX and RGBA color declarations and refined `box-shadow` depth layers across cards, modals, and input fields.
+- **HTML5**: Semantic document layout, sidebar navigation, top header, stats cards, tables, SVG icon vectors, and modal dialogs.
+- **Vanilla CSS3**: Custom FinSight mint green palette (`#34C759`, `#22C55E`, `#D4F4DD`, `#EBF9F1`), responsive CSS Grid & Flexbox, glassmorphism overlays, custom scrollbars, and smooth modal pop transitions.
+- **Vanilla JavaScript (ES6+)**: Custom Canvas bar chart renderer, card payment engine, OTP verification workflow, table sorting algorithms, global search filtering, toast notification system, and state management.
+- **Web Storage API (`localStorage`)**: Persists account cards, balance metrics, transaction logs, daily spending limits, and recent activities locally.
+
+---
+
+## 🚀 How to Run the Application
+
+1. Open a terminal and navigate to the project directory:
+   ```bash
+   cd "/Users/test/Desktop/Last week task"
+   ```
+2. Start a simple HTTP server (Python 3):
+   ```bash
+   python3 -m http.server 8085
+   ```
+3. Open your browser and navigate to:
+   ```
+   http://localhost:8085
+   ```
