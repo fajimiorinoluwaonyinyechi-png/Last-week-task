@@ -58,6 +58,7 @@ body {
   height: 100vh;
   z-index: 100;
   transition: transform 0.3s ease;
+  flex-shrink: 0;
 }
 
 .brand {
@@ -489,6 +490,12 @@ body {
   align-items: flex-start;
   justify-content: space-between;
   gap: 16px;
+}
+
+.chart-title-group {
+  display: flex;
+  flex-direction: column;
+}
 
 .chart-title {
   font-size: 15px;
@@ -795,7 +802,7 @@ body {
   right: -30%;
   width: 260px;
   height: 260px;
-  background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, rgba(255,255,255,0) 70%);
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.3) 0%, rgba(255, 255, 255, 0) 70%);
   border-radius: 50%;
   pointer-events: none;
 }
@@ -895,6 +902,7 @@ body {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 8px;
+}
 
 .quick-act-btn {
   display: flex;
@@ -1060,12 +1068,23 @@ body {
   animation: modalPop 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.modal-medium { width: 540px; }
-.modal-small { width: 380px; }
+.modal-medium {
+  width: 540px;
+}
+
+.modal-small {
+  width: 380px;
+}
 
 @keyframes modalPop {
-  from { transform: scale(0.94); opacity: 0; }
-  to { transform: scale(1); opacity: 1; }
+  from {
+    transform: scale(0.94);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
 }
 
 .modal-header {
@@ -1090,9 +1109,17 @@ body {
   flex-shrink: 0;
 }
 
-.green-icon-bg { background-color: #DCFCE7; }
-.orange-icon-bg { background-color: #FEF3C7; }
-.purple-icon-bg { background-color: #F3E8FF; }
+.green-icon-bg {
+  background-color: #DCFCE7;
+}
+
+.orange-icon-bg {
+  background-color: #FEF3C7;
+}
+
+.purple-icon-bg {
+  background-color: #F3E8FF;
+}
 
 .modal-header h3 {
   font-size: 18px;
@@ -1154,7 +1181,9 @@ body {
   gap: 12px;
 }
 
-.flex-1 { flex: 1; }
+.flex-1 {
+  flex: 1;
+}
 
 .card-form-box {
   background-color: #F8FAF9;
@@ -1192,7 +1221,9 @@ body {
   transition: background-color 0.2s ease;
 }
 
-.btn-secondary:hover { background-color: #E2E8F0; }
+.btn-secondary:hover {
+  background-color: #E2E8F0;
+}
 
 .btn-primary {
   background-color: #0F172A;
@@ -1216,8 +1247,13 @@ body {
 }
 
 /* OTP Simulation Modal */
-.text-center { text-align: center; }
-.justify-center { justify-content: center; }
+.text-center {
+  text-align: center;
+}
+
+.justify-center {
+  justify-content: center;
+}
 
 .otp-instruction {
   font-size: 13px;
@@ -1275,13 +1311,19 @@ body {
   display: flex;
   align-items: center;
   gap: 10px;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
   animation: toastSlide 0.3s ease;
 }
 
 @keyframes toastSlide {
-  from { transform: translateY(20px); opacity: 0; }
-  to { transform: translateY(0); opacity: 1; }
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
 }
 
 /* ==================== RESPONSIVE MEDIA QUERIES ==================== */
